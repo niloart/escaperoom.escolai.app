@@ -1,0 +1,539 @@
+:root {
+    --color-bg: #1a1a2e;
+    --color-surface: #262b45;
+    --color-text: #e2e8f0;
+    --color-text-light: #94a3b8;
+    --color-accent: #81C784;
+    --color-accent-hover: #66BB6A;
+    --color-secondary: #64B5F6;
+    --color-error: #EF5350;
+    --font-main: 'Nunito', 'Segoe UI', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+    --container-width: 1200px;
+    --container-height: 675px;
+
+    --color-locked: #555;
+    --color-active: #e6c200;
+    --color-unlocked: #45cf78;
+    --color-completed: #2a8a4a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: var(--font-main);
+    color: var(--color-text);
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: var(--container-width);
+    height: var(--container-height);
+    background-color: var(--color-bg);
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    background-image: url('../assets/screens/fundo_painel.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#start-screen {
+    position: absolute;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 36px;
+    background: linear-gradient(180deg, rgba(12, 18, 38, 0.97), rgba(7, 11, 24, 0.97));
+}
+
+#timeout-screen {
+    position: absolute;
+    inset: 0;
+    z-index: 320;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 36px;
+    background: rgba(4, 8, 16, 0.96);
+}
+
+.start-screen-content {
+    max-width: 980px;
+    text-align: center;
+    color: #e2e8f0;
+}
+
+.timeout-content {
+    max-width: 760px;
+    text-align: center;
+    color: #e2e8f0;
+    background: rgba(8, 13, 26, 0.88);
+    border: 1px solid #cf4545;
+    border-radius: 14px;
+    padding: 34px 30px;
+    box-shadow: 0 0 26px rgba(207, 69, 69, 0.35);
+}
+
+.timeout-content h1 {
+    color: #ff7d7d;
+    font-size: 2.6rem;
+    margin-bottom: 14px;
+}
+
+.timeout-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+.start-screen-content h1 {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    color: #81C784;
+}
+
+.start-screen-content p {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    margin-bottom: 14px;
+}
+
+.image-btn {
+    margin-top: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.image-btn img {
+    width: 220px;
+    max-width: 100%;
+    height: auto;
+}
+
+#reset-progress-btn {
+    position: absolute;
+    bottom: 44px;
+    left: 60px;
+    top: auto;
+    z-index: 220;
+    padding: 5px 5px;
+    background: transparent;
+    color: #ffb4b4;
+    border: 1px solid #cf4545;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+#reset-progress-btn:hover {
+    background: rgba(207, 69, 69, 0.16);
+}
+
+#reset-progress-btn.on-final-screen {
+    left: 750px;
+    top: 570px;
+    bottom: auto;
+    color: #D15B32;
+}
+
+#reset-progress-btn.on-final-screen:hover {
+    color: #D15B32;
+}
+
+/* ============================
+   Telas / Monitores
+   ============================ */
+.monitor {
+    position: absolute;
+    background-color: var(--color-surface);
+    border: 4px solid var(--color-locked);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.monitor-thumbnail {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.6;
+}
+
+/* Label do monitor (nome do jogo) */
+.monitor-label {
+    position: absolute;
+    bottom: 8px;
+    font-size: 0.75rem;
+    color: #666;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 3;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.monitor-letter {
+    position: absolute;
+    z-index: 4;
+    font-size: 4.4rem;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(69, 207, 120, 0.85);
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+}
+
+/* Estado: Bloqueado (padrão) */
+.monitor.locked::after {
+    content: "BLOQUEADO";
+    font-size: 1rem;
+    color: #666;
+    font-weight: bold;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+/* Estado: Ativo (aguardando chave) */
+.monitor.active {
+    border-color: var(--color-active);
+    background-color: rgba(230, 194, 0, 0.1);
+    box-shadow: 0 0 15px var(--color-active);
+    animation: pulse 2s infinite;
+    cursor: pointer;
+}
+
+.monitor.active::after {
+    content: "AGUARDANDO CHAVE";
+    font-size: 1.2rem;
+    color: var(--color-active);
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.monitor.active .monitor-label {
+    color: var(--color-active);
+}
+
+@keyframes pulse {
+    0%   { box-shadow: 0 0 15px var(--color-active); }
+    50%  { box-shadow: 0 0 25px var(--color-active); }
+    100% { box-shadow: 0 0 15px var(--color-active); }
+}
+
+/* Estado: Desbloqueado (acabou de usar a chave, antes de navegar) */
+.monitor.unlocked {
+    border-color: var(--color-unlocked);
+    background-color: rgba(69, 207, 120, 0.15);
+    box-shadow: 0 0 20px var(--color-unlocked);
+    cursor: default;
+}
+
+.monitor.unlocked::after {
+    content: "LIBERADO";
+    font-size: 1.2rem;
+    color: var(--color-unlocked);
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.monitor.unlocked .monitor-label {
+    color: var(--color-unlocked);
+}
+
+/* Estado: Concluído (jogo já completado) */
+.monitor.completed {
+    border-color: var(--color-completed);
+    background-color: rgba(42, 138, 74, 0.1);
+    cursor: default;
+}
+
+.monitor.completed::after {
+    content: "";
+}
+
+.monitor.completed .monitor-label {
+    color: var(--color-completed);
+}
+
+.monitor.completed .monitor-letter {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.monitor.completed .monitor-thumbnail {
+    opacity: 0.4;
+}
+
+/* ============================
+   Painel de Chaves
+   ============================ */
+#keys-container {
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    width: 330px;
+    height: 110px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+#drag-hint-popup {
+    position: absolute;
+    left: 50%;
+    top: 300px;
+    transform: translateX(-50%);
+    z-index: 240;
+    background: rgba(11, 17, 33, 0.95);
+    border: 1px solid #81C784;
+    color: #e2e8f0;
+    padding: 18px 26px;
+    border-radius: 12px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(129, 199, 132, 0.4);
+    max-width: 480px;
+}
+
+.key-item {
+    width: 56px;
+    height: 80px;
+    cursor: grab;
+    transition: transform 0.2s;
+    background-color: transparent;
+    background-image: url('../assets/chave_card.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+    z-index: 10;
+}
+
+.key-item.first-key-highlight {
+    border: 3px solid var(--color-active);
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(230, 194, 0, 0.7);
+}
+
+.key-item::before {
+    content: "";
+}
+
+.key-item:active {
+    cursor: grabbing;
+}
+
+.key-item.dragging {
+    opacity: 0.5;
+    transform: scale(1.1);
+}
+
+.key-item.used {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* ============================
+   Mensagem Flutuante de Sucesso
+   ============================ */
+.floating-message {
+    position: absolute;
+    color: var(--color-unlocked);
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px #000;
+    pointer-events: none;
+    animation: floatUp 2s forwards;
+    z-index: 200;
+}
+
+@keyframes floatUp {
+    0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+    20%  { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+    100% { opacity: 0; transform: translate(-50%, -150%); }
+}
+
+/* ============================
+   Painel Final (Terminal Mestre)
+   ============================ */
+#final-panel {
+    position: absolute;
+    background-color: var(--color-surface);
+    border: 2px solid #666;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: perspective(500px) rotateX(20deg);
+    background-image: url('../assets/tela_codigo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#final-panel::after {
+    content: "SISTEMA PRINCIPAL (BLOQUEADO)";
+    font-size: 1rem;
+    letter-spacing: 2px;
+    padding: 0 1.5rem;
+    text-align: center;
+}
+
+#final-panel.active {
+    cursor: pointer;
+    opacity: 1;
+    border-color: var(--color-unlocked);
+    box-shadow: 0 0 20px var(--color-unlocked);
+}
+
+#final-panel.active::after {
+    content: "INSERIR CÓDIGO FINAL";
+    white-space: pre-line;
+    padding: 0 1.5rem;
+    text-align: center;
+    color: var(--color-unlocked);
+    animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+    from { opacity: 0.5; }
+    to   { opacity: 1; }
+}
+
+/* ============================
+   Modal de Senha
+   ============================ */
+#password-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: var(--color-surface);
+    padding: 40px;
+    border: 2px solid var(--color-text);
+    border-radius: 10px;
+    text-align: center;
+    min-width: 300px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+input[type="text"] {
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 1.5rem;
+    font-family: var(--font-main);
+    text-align: center;
+    background: var(--color-bg);
+    border: 1px solid #666;
+    color: var(--color-text);
+    letter-spacing: 5px;
+    border-radius: 6px;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+}
+
+input.shake {
+    animation: shake 0.4s ease;
+}
+
+button.confirm-btn {
+    padding: 10px 30px;
+    font-size: 1.2rem;
+    font-family: var(--font-main);
+    background: var(--color-unlocked);
+    border: none;
+    cursor: pointer;
+    color: #000;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+button.confirm-btn:hover {
+    background: #5de094;
+}
+
+button.close-btn {
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    text-decoration: underline;
+    font-family: var(--font-main);
+}
+
+/* ============================
+   Tela de Feedback (Vitória Final)
+   ============================ */
+#feedback-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/screens/imagem_final.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 150;
+}

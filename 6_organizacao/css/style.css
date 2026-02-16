@@ -1,0 +1,676 @@
+:root {
+    /* Paleta de Cores Padrão */
+    --color-bg: #1a1a2e;
+    --color-surface: #262b45;
+    --color-text: #e2e8f0;
+    --color-text-light: #94a3b8;
+    --color-accent: #81C784;
+    --color-accent-hover: #66BB6A;
+    --color-secondary: #64B5F6;
+    --color-error: #EF5350;
+    --font-main: 'Nunito', 'Segoe UI', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+    --container-width: 1200px;
+    --container-height: 675px;
+
+    /* Cores específicas do jogo */
+    --color-primary: #4FC3F7;
+    --color-primary-dark: #29B6F6;
+    --color-secondary-game: #262b45;
+    --color-secondary-dark: #475569;
+    --color-white: #1e293b;
+    --color-shadow: rgba(0, 0, 0, 0.4);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body {
+    background-color: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: var(--font-main);
+    color: var(--color-text);
+    overflow: hidden;
+}
+
+#game-container {
+    width: var(--container-width);
+    height: var(--container-height);
+    background-color: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+/* Telas (Screens) */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    background-color: var(--color-bg);
+    transition: opacity 0.3s ease;
+}
+
+.screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Typography & General UI */
+h1 {
+    font-size: 3rem;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+    color: var(--color-primary-dark);
+}
+
+p {
+    font-size: 1.2rem;
+    color: #cbd5e1;
+    margin-bottom: 2rem;
+    max-width: 860px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.btn {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 6px var(--color-shadow);
+    transition: transform 0.1s, background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Tela de Jogo */
+#game-screen {
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0;
+}
+
+#phase1-board {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: 1200px 675px;
+    background-position: left top;
+    background-repeat: no-repeat;
+}
+
+#lockers-intro-screen {
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/screens/fundo_cacifos.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lockers-intro-overlay {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 205px 20px 160px;
+    background: linear-gradient(to bottom, rgba(2, 6, 23, 0.45), rgba(2, 6, 23, 0.6));
+}
+
+#lockers-intro-message {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.18rem;
+    font-weight: 700;
+    max-width: 860px;
+    color: #e2e8f0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+#items-layer {
+    position: absolute;
+    inset: 0;
+}
+
+.table-item {
+    position: absolute;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transform-origin: center center;
+    transition: transform 0.16s ease, filter 0.16s ease, opacity 0.16s ease;
+}
+
+.table-item.sprite img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+}
+
+.table-item.hotspot {
+    border-radius: 8px;
+    background: rgba(100, 181, 246, 0.08);
+    border: 1px dashed rgba(100, 181, 246, 0.45);
+}
+
+.table-item:hover {
+    transform: scale(1.08);
+    filter: brightness(1.08);
+}
+
+.table-item.resolved {
+    cursor: default;
+    opacity: 0.32;
+}
+
+/* Brilho de dica (item destacado após 5s inativo) */
+.table-item.hint-glow {
+    animation: hintGlow 1.2s ease-in-out infinite;
+}
+
+@keyframes hintGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px 2px rgba(79, 195, 247, 0.6);
+    }
+
+    50% {
+        box-shadow: 0 0 16px 4px rgba(79, 195, 247, 0.9);
+    }
+}
+
+/* Toast de erro - local incorreto */
+.phase1-error-toast {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(239, 83, 80, 0.95);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    z-index: 60;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+    animation: toastFadeIn 0.25s ease;
+}
+
+.phase1-error-toast.hidden {
+    display: none;
+}
+
+.phase2-guide-toast {
+    position: absolute;
+    left: 50%;
+    top: 24%;
+    transform: translate(-50%, -50%);
+    width: min(920px, calc(100% - 80px));
+    padding: 18px 24px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.92);
+    color: #f8fafc;
+    font-size: 1.28rem;
+    font-weight: 800;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.4);
+    z-index: 55;
+}
+
+.phase2-guide-toast.hidden {
+    display: none;
+}
+
+@keyframes toastFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.table-item.vanish {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.choice-menu {
+    position: absolute;
+    width: 185px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 50;
+}
+
+.choice-btn {
+    border: none;
+    border-radius: 10px;
+    color: #f8fafc;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    padding: 10px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.32);
+    transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.choice-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+}
+
+.choice-icon {
+    width: 22px;
+    text-align: center;
+    font-size: 1.05rem;
+}
+
+.choice-lixo {
+    background: linear-gradient(180deg, #ef5350 0%, #d32f2f 100%);
+}
+
+.choice-cacifo {
+    background: linear-gradient(180deg, #42a5f5 0%, #1e88e5 100%);
+}
+
+.choice-mesa {
+    background: linear-gradient(180deg, #4caf50 0%, #2e7d32 100%);
+}
+
+/* Grid de Armários */
+#lockers-grid {
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    /* Ajustado para caber 15 itens (200-214) */
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20px;
+    overflow-y: auto;
+}
+
+#lockers-grid.hidden,
+#phase1-board.hidden,
+#lockers-intro-screen.hidden,
+#choice-menu.hidden {
+    display: none;
+}
+
+/* Locker Styles */
+.locker {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    perspective: 800px;
+}
+
+.locker-door {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-secondary);
+    border-radius: 8px;
+    border: 2px solid var(--color-secondary-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    transform-origin: left;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    cursor: default;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.locker-door.interactive {
+    cursor: pointer;
+    background-color: #334155;
+    /* Leve destaque */
+}
+
+.locker-door.interactive:hover {
+    background-color: #475569;
+}
+
+.locker.open .locker-door {
+    transform: rotateY(-110deg);
+}
+
+/* Detalhes da porta */
+.locker-number {
+    background-color: var(--color-white);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--color-text);
+    align-self: flex-start;
+    border: 1px solid var(--color-secondary-dark);
+}
+
+.locker-vent {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 10px;
+}
+
+.vent-slot {
+    width: 40px;
+    height: 4px;
+    background-color: var(--color-secondary-dark);
+    border-radius: 2px;
+    opacity: 0.5;
+}
+
+.locker-handle {
+    width: 8px;
+    height: 25px;
+    background-color: var(--color-text);
+    border-radius: 2px;
+    margin-right: 10px;
+    align-self: flex-end;
+    opacity: 0.8;
+}
+
+.locker-led {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--color-error);
+    /* Vermelho -> Bloqueado */
+    opacity: 0.8;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.locker.available .locker-led {
+    background-color: var(--color-accent);
+    /* Verde */
+    opacity: 1;
+    box-shadow: 0 0 5px var(--color-accent);
+}
+
+.locker.open .locker-led {
+    background-color: var(--color-accent);
+    opacity: 0.5;
+}
+
+.locker-open-label {
+    color: #81C784;
+    font-weight: bold;
+}
+
+/* Interior do Armário */
+.locker-interior {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #020617;
+    border-radius: 8px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+    /* Fica atrás da porta */
+}
+
+/* Modal Keypad */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(44, 62, 80, 0.5);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.keypad-container {
+    background-color: var(--color-white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    width: 320px;
+    text-align: center;
+}
+
+#keypad-message {
+    font-size: 1rem;
+    color: var(--color-text);
+    margin-bottom: 10px;
+    min-height: 1.5rem;
+}
+
+#keypad-display {
+    background-color: #0f172a;
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    letter-spacing: 5px;
+    color: var(--color-text);
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-secondary);
+}
+
+.keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.keypad-btn {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-secondary);
+    border-radius: 8px;
+    padding: 15px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.keypad-btn:hover {
+    background-color: var(--color-secondary);
+}
+
+.keypad-btn:active {
+    transform: scale(0.95);
+}
+
+.keypad-btn.action {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+}
+
+.keypad-btn.clear {
+    background-color: var(--color-error);
+    color: white;
+    border: none;
+}
+
+.close-modal-btn {
+    margin-top: 20px;
+    background: none;
+    border: none;
+    color: #90A4AE;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Estados de Vitória/Derrota */
+.result-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.text-success {
+    color: var(--color-accent);
+}
+
+.text-fail {
+    color: var(--color-error);
+}
+
+/* Start Screen Update */
+#start-screen {
+    background-image: url('../assets/screens/fundo_incio.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#start-message {
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.image-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease;
+    /* Position the button if needed, central by default due to flex parent */
+}
+
+.image-btn:hover {
+    transform: scale(1.05);
+}
+
+.image-btn:active {
+    transform: scale(0.95);
+}
+
+/* Botão de Retorno ao Painel de Controlo */
+.btn-return-panel {
+    background: transparent;
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 20px;
+    box-shadow: 0 0 15px rgba(129, 199, 132, 0.3);
+    letter-spacing: 2px;
+    border-radius: 8px;
+}
+
+.btn-return-panel:hover {
+    background: var(--color-accent);
+    color: #000;
+    box-shadow: 0 0 30px rgba(129, 199, 132, 0.6);
+}
+
+.btn-return-panel.hidden {
+    display: none;
+}
+
+.shake {
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+
+    75% {
+        transform: translateX(-4px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}

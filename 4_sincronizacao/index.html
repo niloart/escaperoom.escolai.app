@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chave da Sincronização</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="game-container">
+
+        <!-- INTRO SCREEN -->
+        <div id="intro-screen" class="screen active">
+            <div class="intro-content">
+                <h1 class="intro-title">Chave da sincronização</h1>
+                <p class="intro-description">ALERTA DE CONEXÃO! A 'Visão Remota' está instável.
+                    A equipa que está em casa não consegue ouvir nem ver com clareza devido a más práticas na sala
+                    física.
+                    Tens de identificar as fontes de interferência na sala e escolher a ação corretiva rápida antes que
+                    a chamada caia!</p>
+
+                <div class="intro-cards">
+                    <div class="intro-card">
+                        <h3>Objetivo:</h3>
+                        <p>Resolver 5 cenários e atingir 100% de sinal.</p>
+                    </div>
+                    <div class="intro-card">
+                        <h3>Risco:</h3>
+                        <p>Erros penalizam tempo e bloqueiam o sistema.</p>
+                    </div>
+                </div>
+
+                <div class="start-button-container">
+                    <button id="start-btn" class="image-btn"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GAME SCREEN -->
+        <div id="game-screen" class="screen">
+            <!-- Header -->
+            <div class="game-header">
+                <div class="header-left"></div>
+
+            </div>
+
+            <div class="split-layout">
+                <!-- Left Panel: Visual Scenario -->
+                <div id="left-panel">
+                    <!-- Background image added via CSS to #left-panel or inner div -->
+                    <div class="visual-content">
+                        <div id="interaction-buttons"></div>
+                    </div>
+
+                    <!-- Alert Box -->
+                    <div id="alert-box">
+                        <span class="warning-icon">⚠️</span>
+                        <div>
+                            <h4 id="alert-title"></h4>
+                            <p id="alert-visual-desc"></p>
+                        </div>
+                    </div>
+
+                    <!-- Feedback Overlay (Success/Error) -->
+                    <div id="feedback-overlay" class="feedback-overlay">
+                        <div class="feedback-content">
+                            <span id="feedback-icon" class="feedback-icon"></span>
+                            <h2 id="feedback-title"></h2>
+                            <p id="feedback-message"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Controls -->
+                <div id="right-panel">
+                    <div class="sync-status">
+                        <div class="sync-header">
+                            <span>SINAL DE COMUNICAÇÃO</span>
+                            <span id="sync-text">0%</span>
+                        </div>
+                        <div class="sync-track">
+                            <div id="sync-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-info">
+                        <h2 id="scenario-title">INTERAÇÃO 1</h2>
+                        <p class="instruction-text">Escolhe a ação corretiva:</p>
+                    </div>
+
+                    <div id="options-container">
+                        <!-- Buttons injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VICTORY SCREEN -->
+        <div id="victory-screen" class="screen">
+            <div class="victory-content">
+                <h1>Sincronização Completa!</h1>
+                <p>Conseguiste eliminar todas as interferências com sucesso.</p>
+                <button class="btn-return-panel" onclick="localStorage.setItem('escaperoom_progress', '4'); window.location.href='/principal/';">Voltar ao Painel de Controlo</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../shared/global-session-timer.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>

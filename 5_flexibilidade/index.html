@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lugares Certos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div id="game-container">
+        <!-- Toast Notification -->
+        <div id="toast">Erro</div>
+
+        <!-- Intro Screen -->
+        <div id="intro-screen" class="screen">
+            <h1 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Flexibilidade</h1>
+            <p style="color: #fff; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">O escritório está quase
+                cheio. Tem equipas para alocar, mas os espaços livres têm formatos irregulares. Analise o espaço
+                disponível, Clique no botão 'ATIVAR FLEXIBILIDADE' para adaptar a disposição da sua equipa. Escolha a
+                melhor forma e arraste para o espaço livre.</p>
+            <div id="level-selection" style="display: flex; gap: 20px;">
+                <button class="image-btn level-btn" data-level="1">
+                    <img src="assets/buttons/botao_iniciar.png" alt="Iniciar">
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Interface -->
+        <div id="game-ui" class="screen hidden">
+            <header id="header">
+                <div id="controls">
+                    <button id="restart-game-btn" class="btn"
+                        style="background-color: #e74c3c; font-size: 1rem; padding: 10px 20px;">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                        Reiniciar
+                    </button>
+                </div>
+            </header>
+
+            <div id="main-area">
+                <!-- Sidebar with Unassigned Teams -->
+                <div id="sidebar-container">
+                    <h2>Equipas</h2>
+                    <div id="teams-list">
+                        <!-- Dynamic Content -->
+                    </div>
+                    <!-- Legend -->
+                    <div id="game-legend">
+                        <div class="legend-item">
+                            <div class="legend-box available"></div>
+                            <span>Lugares disponíveis</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-box occupied"></div>
+                            <span>Lugares ocupados</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Office Area with Desks -->
+                <div id="office-area">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen (Victory) -->
+        <div id="victory-screen" class="screen end-screen hidden">
+            <h1>Parabéns!</h1>
+            <p>Conseguiste organizar todas as equipas a tempo.</p>
+            <button class="btn-return-panel" onclick="localStorage.setItem('escaperoom_progress', '5'); window.location.href='/principal/';">Voltar ao Painel de Controlo</button>
+        </div>
+
+        <!-- Game Over Screen (Defeat) -->
+        <div id="defeat-screen" class="screen end-screen hidden">
+            <h1>Tempo Esgotado!</h1>
+            <p>Que pena! Tenta organizar as equipas mais rápido.</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/global-session-timer.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>

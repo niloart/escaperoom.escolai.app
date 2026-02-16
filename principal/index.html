@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScapeRoom - Controle de Acesso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div id="game-container">
+        <div id="timeout-screen" class="hidden">
+            <div class="timeout-content">
+                <h1>Tempo Esgotado</h1>
+                <p>
+                    O tempo geral de 10 minutos terminou e o sistema foi reiniciado.
+                    Todos os monitores foram bloqueados novamente.
+                </p>
+                <button id="timeout-return-btn" class="confirm-btn" type="button">
+                    Voltar ao Painel de Controlo
+                </button>
+            </div>
+        </div>
+
+        <div id="start-screen">
+            <div class="start-screen-content">
+                <h1>Chegaste ao Desafio Final!</h1>
+                <p>
+                    É o dia da Mudança.<br>
+                    A porta principal está bloqueada pelo sistema de segurança: foram detetados alguns constrangimentos operacionais devido à utilização incorreta dos espaços e das ferramentas. Tens 10 minutos.
+                </p>
+                <p>
+                    Usa as chaves que recolheste ao longo do percurso, resolve os desafios e estabiliza o sistema a tempo de abrir as portas para a entrada de todos.
+                </p>
+                <p>O futuro da nossa Nova Casa está nas tuas mãos.</p>
+                <button id="start-btn" class="image-btn" type="button" aria-label="Iniciar desafio final">
+                    <img src="assets/botao_iniciar.png" alt="Iniciar">
+                </button>
+            </div>
+        </div>
+
+        <!-- Telas serão geradas via JS baseado no Config -->
+
+        <button id="reset-progress-btn" type="button">Zerar e começar novamente</button>
+
+        <div id="drag-hint-popup" class="hidden" role="status" aria-live="polite">
+            Arraste a chave até um monitor para desbloquá-lo
+        </div>
+
+        <!-- Container de Chaves -->
+        <div id="keys-container"></div>
+
+        <!-- Modal de Senha -->
+        <div id="password-modal" class="hidden">
+            <div class="modal-content">
+                <h2 id="modal-title">Digite a Senha</h2>
+                <input type="text" id="password-input" maxlength="10" autocomplete="off">
+                <div id="modal-error" style="color:red; height: 20px; margin-bottom: 10px;"></div>
+                <button id="modal-submit" class="confirm-btn">CONFIRMAR</button>
+                <br>
+                <button id="modal-close" class="close-btn">Cancelar</button>
+            </div>
+        </div>
+
+        <!-- Tela de Vitória -->
+        <div id="feedback-screen" class="hidden" aria-label="Mensagem final do jogo"></div>
+    </div>
+
+    <script src="../shared/global-session-timer.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>

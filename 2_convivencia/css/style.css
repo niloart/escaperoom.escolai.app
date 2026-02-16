@@ -1,0 +1,234 @@
+:root {
+    --color-bg: #1a1a2e;
+    --color-surface: #262b45;
+    --color-text: #e2e8f0;
+    --color-text-light: #94a3b8;
+    --color-accent: #81c784;
+    --color-accent-hover: #66bb6a;
+    --color-secondary: #64b5f6;
+    --color-error: #ef5350;
+    --font-main: 'Nunito', 'Segoe UI', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+    --container-width: 1200px;
+    --container-height: 675px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: var(--font-main);
+    color: var(--color-text);
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: var(--container-width);
+    height: var(--container-height);
+    background-color: var(--color-bg);
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+#intro-screen {
+    background-image: url('../assets/fundo_inicio.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.intro-content {
+    width: 90%;
+    max-width: 780px;
+    text-align: center;
+    background: rgba(15, 23, 42, 0.58);
+    border: 1px solid rgba(226, 232, 240, 0.25);
+    border-radius: 16px;
+    padding: 42px 56px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.intro-title {
+    font-size: 3rem;
+    color: var(--color-text);
+    font-weight: 900;
+    margin-bottom: 16px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+
+.intro-description {
+    font-size: 1.32rem;
+    line-height: 1.6;
+    margin-bottom: 28px;
+    color: #f8fafc;
+}
+
+.image-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    padding: 0;
+}
+
+.image-btn img {
+    width: 260px;
+    max-width: 100%;
+    display: block;
+}
+
+.image-btn:hover {
+    transform: scale(1.04);
+}
+
+.image-btn:active {
+    transform: scale(0.98);
+}
+
+#game-screen {
+    background-color: var(--color-bg);
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0;
+}
+
+#scene-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--container-width);
+    height: var(--container-height);
+    background-image: url('../assets/fundo_principal.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+#status-pill {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 20;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(129, 199, 132, 0.65);
+    border-radius: 10px;
+    padding: 9px 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+#message-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 25;
+    pointer-events: none;
+}
+
+.scene-message {
+    position: absolute;
+    max-width: 320px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    font-weight: 800;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.scene-message.success {
+    color: #1f2937;
+    border: 1px solid #facc15;
+    background: rgba(250, 204, 21, 0.88);
+}
+
+.scene-message.error {
+    color: #fff5f5;
+    border: 1px solid #ef5350;
+    background: rgba(239, 83, 80, 0.88);
+}
+
+.scene-message.info {
+    color: #e0f2fe;
+    border: 1px solid #64b5f6;
+    background: rgba(100, 181, 246, 0.85);
+}
+
+#victory-screen {
+    background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.93), rgba(15, 23, 42, 0.93)),
+        url('../assets/fundo_principal.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.victory-content {
+    max-width: 820px;
+    text-align: center;
+    background: rgba(26, 26, 46, 0.88);
+    border: 1px solid rgba(129, 199, 132, 0.45);
+    border-radius: 16px;
+    padding: 44px;
+}
+
+.victory-content h2 {
+    font-size: 2.2rem;
+    color: var(--color-text);
+    margin-bottom: 28px;
+    line-height: 1.3;
+}
+
+.btn-return-panel {
+    background: transparent;
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 15px rgba(129, 199, 132, 0.3);
+    letter-spacing: 2px;
+    border-radius: 8px;
+}
+
+.btn-return-panel:hover {
+    background: var(--color-accent);
+    color: #000;
+    box-shadow: 0 0 30px rgba(129, 199, 132, 0.6);
+}

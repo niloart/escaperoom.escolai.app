@@ -1,0 +1,611 @@
+:root {
+    --color-bg: #1a1a2e;
+    --color-surface: #262b45;
+    --color-text: #e2e8f0;
+    --color-text-light: #94a3b8;
+    --color-primary: #81C784;
+    --color-primary-dark: #66BB6A;
+    --color-secondary: #64B5F6;
+    --color-error: #EF5350;
+    --color-locked: #2d3748;
+
+    --color-accent: #81C784;
+    --color-accent-hover: #66BB6A;
+    --font-main: 'Nunito', 'Segoe UI', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+    --container-width: 1200px;
+    --container-height: 675px;
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-elevated: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: var(--font-main);
+    color: var(--color-text);
+}
+
+#game-container {
+    width: var(--container-width);
+    height: var(--container-height);
+    background-color: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+/* Screens */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Intro Screen */
+#intro-screen {
+    justify-content: center;
+    align-items: center;
+    background-image: url('../assets/backgrounds/Fundo_inicio.png');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    color: #ffffff;
+}
+
+.intro-content {
+    z-index: 2;
+    width: 100%;
+    max-width: 1100px;
+    /* Increased max-width */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2rem;
+    padding-top: 135px;
+    gap: 0.5rem;
+    /* Reduced gap */
+}
+
+.intro-title {
+    font-family: 'Eurostile', var(--font-main);
+    /* Tech look if available */
+    font-size: 2.5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0rem;
+    /* Reduced margin */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.intro-description {
+    font-size: 1rem;
+    line-height: 1.4;
+    max-width: 950px;
+    /* Increased max-width */
+    margin-bottom: 0.5rem;
+    /* Reduced margin */
+    color: #e2e8f0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.intro-cards {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1rem;
+    /* Reduced margin */
+}
+
+.intro-card {
+    background: rgba(30, 41, 59, 0.7);
+    /* Dark semi-transparent */
+    border: 2px solid #ef4444;
+    /* Red border like image */
+    border-radius: 12px;
+    padding: 1rem;
+    /* Reduced padding */
+    flex: 1;
+    max-width: 320px;
+    text-align: left;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.intro-card h3 {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.intro-card p {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    color: #ffffff;
+}
+
+.start-button-container {
+    margin-top: 0rem;
+}
+
+.image-btn {
+    background: url('../assets/buttons/botao_iniciar.png') no-repeat center center;
+    background-size: contain;
+    width: 250px;
+    height: 80px;
+    /* Adjust based on image aspect ratio */
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-family: var(--font-main);
+    text-transform: uppercase;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5px;
+    /* Visual adjustment if needed */
+    transition: transform 0.2s;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.image-btn:hover {
+    transform: scale(1.05);
+}
+
+
+/* Game Screen */
+#game-screen {
+    background-color: var(--color-bg);
+    padding: 1rem 2rem;
+}
+
+.game-header {
+    display: none;
+}
+
+.header-left {
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-text-light);
+}
+
+.timer-box {
+    background: var(--color-surface);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.25rem;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.split-layout {
+    display: flex;
+    gap: 2rem;
+    flex: 1;
+    height: calc(100% - 4rem);
+}
+
+/* LEFT PANEL (Middle Square) */
+#left-panel {
+    flex: 1;
+    background-color: #000;
+    /* Fallback */
+    background-image: url('../assets/backgrounds/fundo.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 1rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Dark overlay for text readability on image */
+#left-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.visual-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    width: 100%;
+    height: 100%;
+}
+
+.interaction-btn {
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: white;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    animation: pulse 2s infinite;
+}
+
+.interaction-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.interaction-btn.completed {
+    background: rgba(129, 199, 132, 0.8);
+    border-color: #81C784;
+    animation: none;
+    cursor: default;
+}
+
+.interaction-btn i {
+    /* Placeholder for potential icon library unless using text */
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+
+.visual-circle {
+    width: 6rem;
+    height: 6rem;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    margin: 0 auto 1.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.visual-text-box h3 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+    color: #81C784;
+    /* Accent color text inside dark box */
+}
+
+.visual-text-box p {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-weight: 600;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+#alert-box {
+    position: absolute;
+    top: 4.5rem;
+    left: 2rem;
+    right: 2rem;
+    background: rgba(15, 23, 42, 0.9);
+    border-left: 4px solid var(--color-error);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    z-index: 2;
+    display: none;
+    /* Flex when active */
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    backdrop-filter: blur(4px);
+}
+
+#alert-title {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 0.2rem;
+    color: #ff9191;
+    /* Light red/pink to stand out */
+}
+
+#alert-visual-desc {
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
+.warning-icon {
+    font-size: 1.5rem;
+}
+
+.feedback-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+}
+
+.feedback-overlay.visible {
+    display: flex;
+}
+
+.feedback-overlay.success {
+    background: rgba(76, 175, 80, 0.85);
+    /* Green tint */
+    color: white;
+}
+
+.feedback-overlay.error {
+    background: rgba(239, 83, 80, 0.85);
+    /* Red tint */
+    color: white;
+}
+
+.feedback-content {
+    text-align: center;
+    animation: zoomIn 0.3s ease-out;
+}
+
+.feedback-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.feedback-content h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.feedback-content p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* RIGHT PANEL */
+#right-panel {
+    flex: 0 0 400px;
+    /* Fixed width sidebar option */
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.sync-status {
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    background: var(--color-surface);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
+}
+
+.sync-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: var(--color-text-light);
+    font-size: 0.8rem;
+}
+
+.sync-track {
+    height: 1.5rem;
+    background: #E2E8F0;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+#sync-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--color-secondary);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scenario-info {
+    margin-bottom: 0.5rem;
+}
+
+#scenario-title {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.instruction-text {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+
+/* OPTIONS */
+#options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 0;
+    /* Push to bottom if needed, or just flow */
+    margin-bottom: auto;
+}
+
+.option-btn {
+    appearance: none;
+    border: none;
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+    border-radius: 1rem;
+    text-align: left;
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    /* Highlight requirement: Big text */
+    font-weight: 700;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+}
+
+.option-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
+    border-color: var(--color-secondary);
+}
+
+.option-btn:active {
+    transform: translateY(0);
+}
+
+/* BUTTONS */
+.primary-btn {
+    padding: 1rem 3rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    background-color: var(--color-secondary);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px 0 rgba(100, 181, 246, 0.39);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-btn:hover {
+    transform: scale(1.05);
+    background-color: #42A5F5;
+}
+
+/* VICTORY */
+#victory-screen {
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--color-bg) 0%, #064E3B 100%);
+    /* Dark Green tint */
+    text-align: center;
+}
+
+.victory-content {
+    background: var(--color-surface);
+    padding: 3rem;
+    border-radius: 2rem;
+    box-shadow: var(--shadow-elevated);
+}
+
+.victory-icon {
+    font-size: 5rem;
+    margin: 1rem 0;
+}
+
+.victory-content h1 {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+}
+
+/* Keyframes */
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.victory-content .access-code {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    color: var(--color-text);
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+    border: 1px solid var(--color-primary);
+}
+
+.victory-content .access-code strong {
+    color: var(--color-primary);
+    font-size: 2rem;
+    display: block;
+    margin-top: 0.5rem;
+    letter-spacing: 0.2rem;
+}
+
+/* Botão de Retorno ao Painel de Controlo */
+.btn-return-panel {
+    background: transparent;
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 2rem;
+    box-shadow: 0 0 15px rgba(129, 199, 132, 0.3);
+    letter-spacing: 2px;
+    border-radius: 8px;
+}
+
+.btn-return-panel:hover {
+    background: var(--color-accent);
+    color: #000;
+    box-shadow: 0 0 30px rgba(129, 199, 132, 0.6);
+}

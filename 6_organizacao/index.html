@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organização - Mesa e Cacifos</title>
+    <!-- Fontes do Padrão -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div id="game-container">
+
+        <!-- Tela Inicial -->
+        <div id="start-screen" class="screen">
+            <h1>ORGANIZAÇÃO</h1>
+            <p id="start-message">
+                ORGANIZAÇÃO:<br>
+                Analise os objetos destacados e decida o destino imediato: LIXO, CACIFO ou MANTER NA MESA.
+                Depois, deverá ir à zona de Cacifos e guardar os seus pertences.
+            </p>
+            <button id="start-btn" class="image-btn">
+                <img src="assets/buttons/botao_iniciar.png" alt="Iniciar Jogo">
+            </button>
+        </div>
+
+        <!-- Tela do Jogo -->
+        <div id="game-screen" class="screen hidden">
+            <div id="phase1-board">
+                <div id="phase1-error-toast" class="phase1-error-toast hidden"></div>
+                <div id="items-layer"></div>
+                <div id="choice-menu" class="choice-menu hidden">
+                    <button class="choice-btn choice-lixo" data-choice="LIXO">
+                        <span class="choice-icon" aria-hidden="true">🗑</span>
+                        <span>LIXO</span>
+                    </button>
+                    <button class="choice-btn choice-cacifo" data-choice="CACIFO">
+                        <span class="choice-icon" aria-hidden="true">🔒</span>
+                        <span>CACIFO</span>
+                    </button>
+                    <button class="choice-btn choice-mesa" data-choice="MESA">
+                        <span class="choice-icon" aria-hidden="true">🖥</span>
+                        <span>MESA</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="lockers-intro-screen" class="hidden">
+                <div class="lockers-intro-overlay">
+                    <p id="lockers-intro-message">
+                        Selecione um cacifo<br>
+                        Crie uma senha depois selecine o mesmo cacifo e digita a senha
+                    </p>
+                    <button id="lockers-intro-btn" class="image-btn">
+                        <img src="assets/buttons/botao_iniciar.png" alt="Iniciar">
+                    </button>
+                </div>
+            </div>
+
+            <div id="lockers-grid" class="hidden">
+                <!-- Armários gerados via JS -->
+            </div>
+
+            <div id="phase2-guide-toast" class="phase2-guide-toast hidden"></div>
+        </div>
+
+        <!-- Modal do Keypad (Overlay no Jogo) -->
+        <div id="keypad-modal" class="modal-overlay hidden">
+            <div class="keypad-container">
+                <div id="keypad-message">DIGITE O PIN</div>
+                <div id="keypad-display"></div>
+                <div class="keypad-grid">
+                    <button class="keypad-btn" data-key="1">1</button>
+                    <button class="keypad-btn" data-key="2">2</button>
+                    <button class="keypad-btn" data-key="3">3</button>
+                    <button class="keypad-btn" data-key="4">4</button>
+                    <button class="keypad-btn" data-key="5">5</button>
+                    <button class="keypad-btn" data-key="6">6</button>
+                    <button class="keypad-btn" data-key="7">7</button>
+                    <button class="keypad-btn" data-key="8">8</button>
+                    <button class="keypad-btn" data-key="9">9</button>
+                    <button class="keypad-btn clear" data-key="C">C</button>
+                    <button class="keypad-btn" data-key="0">0</button>
+                    <button class="keypad-btn action" data-key="Enter">OK</button>
+                </div>
+                <button id="keypad-close" class="close-modal-btn">Cancelar</button>
+            </div>
+        </div>
+
+        <!-- Tela de Fim de Jogo -->
+        <div id="end-screen" class="screen hidden">
+            <div id="end-content" style="text-align: center;">
+                <!-- Conteúdo injetado via JS -->
+            </div>
+            <br>
+            <button id="return-panel-btn" class="btn-return-panel hidden"
+                onclick="localStorage.setItem('escaperoom_progress', '6'); window.location.href='/principal/';">Voltar
+                ao Painel de Controlo</button>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/global-session-timer.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/soundService.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>

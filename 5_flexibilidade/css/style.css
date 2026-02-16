@@ -1,0 +1,620 @@
+:root {
+    --color-bg: #1a1a2e;
+    --color-surface: #262b45;
+    --color-text: #e2e8f0;
+    --color-text-light: #94a3b8;
+    --color-accent: #81C784;
+    --color-accent-hover: #66BB6A;
+    --color-secondary: #64B5F6;
+    --color-error: #EF5350;
+    --font-main: 'Nunito', 'Segoe UI', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+    --container-width: 1200px;
+    --container-height: 675px;
+    --grid-cell-size: 38px;
+
+    /* Compat aliases for existing code */
+    --bg-color: var(--color-bg);
+    --text-color: #2C3E50;
+    --accent-color: var(--color-accent);
+    --font-family: var(--font-main);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body {
+    background-color: #0f172a;
+    font-family: var(--font-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    color: var(--color-text);
+}
+
+#game-container {
+    width: var(--container-width);
+    height: var(--container-height);
+    background: url('../assets/backgrounds/Fundo.png') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+/* Screens */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: opacity 0.3s;
+}
+
+.end-screen {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.end-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    display: none;
+}
+
+.screen h1 {
+    font-size: 3rem;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
+
+.screen p {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    text-align: center;
+    max-width: 800px;
+}
+
+.btn {
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn:hover {
+    filter: brightness(1.1);
+}
+
+/* Gameplay Layout */
+#game-ui {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: transparent;
+}
+
+#intro-screen {
+    background-color: rgba(255, 255, 255, 0);
+    animation: intro-backdrop 0.5s ease forwards;
+    animation-delay: 0.6s;
+}
+
+#intro-screen h1,
+#intro-screen p,
+#intro-screen #level-selection {
+    opacity: 0;
+    transform: translateY(6px);
+    animation: intro-content 0.5s ease forwards;
+    animation-delay: 0.75s;
+}
+
+@keyframes intro-backdrop {
+    from {
+        background-color: rgba(255, 255, 255, 0);
+    }
+
+    to {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+@keyframes intro-content {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    z-index: 5;
+}
+
+#controls {
+    display: flex;
+    gap: 20px;
+}
+
+#sidebar-container {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    width: 350px;
+    height: 555px;
+    background: rgba(13, 22, 43, 0.88);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(160, 177, 214, 0.2);
+    z-index: 5;
+}
+
+#sidebar-container h2 {
+    color: #e8edf7;
+}
+
+#teams-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 10px;
+    padding-right: 5px;
+    /* Space for scrollbar */
+}
+
+/* Custom Scrollbar for sidebar */
+#teams-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+#teams-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+#teams-list::-webkit-scrollbar-thumb {
+    background: rgba(210, 221, 242, 0.5);
+    border-radius: 4px;
+}
+
+#teams-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(210, 221, 242, 0.75);
+}
+
+#main-area {
+    /* Removed flex layout */
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+}
+
+#office-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    pointer-events: none;
+    /* Let clicks pass through to desks */
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Desk Grids */
+.desk {
+    display: grid;
+    /* grid-template-columns set via JS */
+    gap: 2px;
+    background-color: rgba(255, 255, 255, 0.0);
+    padding: 34px 10px 10px;
+    border-radius: 8px;
+    position: absolute;
+    width: 113px;
+    height: 528px;
+    pointer-events: auto;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+}
+
+/* Specific Desk Positions */
+.desk[data-id="desk-1"] {
+    left: 435px;
+    top: 37px;
+}
+
+.desk[data-id="desk-2"] {
+    left: 630px;
+    top: 37px;
+}
+
+.desk[data-id="desk-3"] {
+    left: 827px;
+    top: 37px;
+}
+
+.desk[data-id="desk-4"] {
+    left: 995px;
+    top: 37px;
+}
+
+.desk h3 {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #34495e;
+    font-size: 1rem;
+    margin: 0;
+    pointer-events: none;
+}
+
+.cell {
+    width: var(--grid-cell-size);
+    height: var(--grid-cell-size);
+    background-color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.cell.occupied {
+    /* Color set inline */
+}
+
+.cell.blocked {
+    background-color: #555;
+    background-image: repeating-linear-gradient(45deg,
+            #606dbc,
+            #606dbc 5px,
+            #465298 5px,
+            #465298 10px);
+    cursor: not-allowed;
+    border: 1px solid #999;
+}
+
+.cell.drag-over {
+    background-color: #e0f7fa;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cell.invalid-drop {
+    background-color: #ffebee;
+}
+
+.cell.preview-valid {
+    background-color: rgba(46, 204, 113, 0.5) !important;
+    box-shadow: inset 0 0 0 2px #27ae60;
+}
+
+.cell.preview-invalid {
+    background-color: rgba(231, 76, 60, 0.5) !important;
+    box-shadow: inset 0 0 0 2px #c0392b;
+}
+
+/* Off-screen container for generating drag images */
+#drag-ghost-container {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.ghost-shape {
+    display: grid;
+    gap: 2px;
+    background: transparent;
+}
+
+.ghost-cell {
+    width: 38px;
+    height: 38px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.team-card {
+    background-color: #f8fbff;
+    border: 2px solid #e2e8f0;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.2s;
+}
+
+.team-card:hover {
+    border-color: var(--accent-color);
+    transform: translateX(5px);
+}
+
+.team-card.dragging {
+    opacity: 0.5;
+}
+
+.team-shape-preview {
+    display: grid;
+    gap: 1px;
+}
+
+.preview-cell {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.team-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.flex-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 6px;
+    background-color: #f1f3f5;
+    color: #2c3e50;
+    font-size: 0.85rem;
+}
+
+.flex-btn:hover {
+    filter: brightness(0.98);
+}
+
+.team-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    display: inline-block;
+}
+
+/* Flex Button */
+#flex-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#flex-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+#flex-btn.active {
+    background-color: #2ecc71;
+}
+
+#game-legend {
+    margin-top: 12px;
+    z-index: 5;
+    background-color: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.legend-item span {
+    font-size: 0.9rem;
+    color: #f3f7ff;
+    font-weight: 600;
+}
+
+.legend-box {
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.legend-box.available {
+    background-color: #fff;
+}
+
+.legend-box.occupied {
+    background-color: #555;
+    background-image: repeating-linear-gradient(45deg,
+            #606dbc,
+            #606dbc 5px,
+            #465298 5px,
+            #465298 10px);
+    border: 1px solid #999;
+}
+
+/* Toast */
+#toast {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    z-index: 100;
+}
+
+#toast.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes invalid-shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+    100% { transform: translateX(0); }
+}
+
+.team-card.invalid-shake {
+    animation: invalid-shake 0.45s ease;
+}
+
+.cell.invalid-shake {
+    animation: invalid-shake 0.45s ease;
+}
+/* Start Screen Update */
+#intro-screen {
+    background-image: url('../assets/screens/Fundo_inicio.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-color: transparent !important;
+    animation: none !important;
+}
+
+.image-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease;
+    box-shadow: none; /* Remove default btn shadow if present */
+}
+
+.image-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.image-btn:active {
+    transform: scale(0.95);
+}
+
+.image-btn img {
+    display: block; /* Remove bottom spacing */
+}
+
+.cell.occupied-fixed {
+    background-color: #555 !important;
+    background-image: repeating-linear-gradient(45deg,
+            #606dbc,
+            #606dbc 5px,
+            #465298 5px,
+            #465298 10px) !important;
+    border: 1px solid #999;
+}
+
+/* Botão de Retorno ao Painel de Controlo */
+.btn-return-panel {
+    background: transparent;
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 20px;
+    box-shadow: 0 0 15px rgba(129, 199, 132, 0.3);
+    letter-spacing: 2px;
+    border-radius: 8px;
+}
+
+.btn-return-panel:hover {
+    background: var(--color-accent);
+    color: #000;
+    box-shadow: 0 0 30px rgba(129, 199, 132, 0.6);
+}

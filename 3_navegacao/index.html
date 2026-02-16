@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Tráfego de Escritório</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="game-container">
+        <!-- Ecrã de Missão (Overlay sobre o fundo do jogo) -->
+        <div id="mission-screen">
+            <div class="mission-content">
+                <h1 class="mission-title">A tua missão...</h1>
+                <p class="mission-description">
+                    És o Controlador de Tráfego do Escritório! 9 colaboradores precisam de trabalhar, mas os espaços são
+                    limitados. Tua Missão: Arrasta cada pessoa para o local adequado à sua tarefa. ⚠️ ATENÇÃO: Cada
+                    tarefa ocupa a sala por um tempo (segundos). Se a sala ideal estiver ocupada, coloque o colega na
+                    SALA DE ESPERA. Não deixe ninguém sem lugar!
+                </p>
+
+                <h2 class="mission-subtitle">Tipos de tarefas</h2>
+
+                <div class="mission-cards">
+                    <div class="mission-card card-blue">
+                        <h3>E-mail / Chat</h3>
+                        <p class="location-text">OPEN SPACE</p>
+                    </div>
+                    <div class="mission-card card-red">
+                        <h3>Confidencial / Feedback</h3>
+                        <p class="location-text">PHONEBOOTH</p>
+                    </div>
+                    <div class="mission-card card-green">
+                        <h3>Daily / Alinhamento</h3>
+                        <p class="location-text">HUDDLE ROOM</p>
+                    </div>
+                </div>
+
+                <div class="mission-button-container">
+                    <button id="continue-btn">Continuar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Área do Jogo -->
+        <div id="game-area">
+            <!-- Header -->
+            <div id="header">
+                <div id="timer-container" class="hidden">
+                    <span id="timer">01:00</span>
+                </div>
+                <div id="phase-indicator">
+                    <span id="phase-text">Fase 1: Aquecimento</span>
+                </div>
+                <div id="progress-container">
+                    <span id="progress-text">Colaboradores: <span id="completed">0</span>/9</span>
+                    <div id="progress-bar">
+                        <div id="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Área Principal com Fundo -->
+            <div id="office">
+                <!-- Receção - Área superior -->
+                <div id="reception" class="area">
+                    <div class="slots-container" id="reception-slots">
+                        <span class="slot-placeholder"></span>
+                        <span class="slot-placeholder"></span>
+                        <span class="slot-placeholder"></span>
+                        <span class="slot-placeholder"></span>
+                    </div>
+                    <div class="area-label">Receção</div>
+                </div>
+
+                <!-- Sala de Espera - Área do meio -->
+                <div id="waiting-room" class="area">
+                    <div class="slots-container" id="waiting-slots">
+                        <span class="slot-placeholder"></span>
+                        <span class="slot-placeholder"></span>
+                        <span class="slot-placeholder"></span>
+                    </div>
+                    <div class="area-label">Sala de Espera</div>
+                </div>
+
+                <!-- Espaços de Trabalho - Área inferior -->
+                <div id="workspaces">
+                    <!-- OPEN SPACE -->
+                    <div id="open-space" class="workspace">
+                        <div class="workspace-slots">
+                            <div class="work-slot" data-type="blue" data-slot="open-a">
+                                <div class="card-timer hidden"></div>
+                            </div>
+                            <div class="work-slot" data-type="blue" data-slot="open-b">
+                                <div class="card-timer hidden"></div>
+                            </div>
+                        </div>
+                        <div class="workspace-label">OPEN SPACE</div>
+                    </div>
+
+                    <!-- PHONEBOOTH -->
+                    <div id="phonebooth" class="workspace">
+                        <div class="workspace-slots">
+                            <div class="work-slot" data-type="red" data-slot="phone">
+                                <div class="card-timer hidden"></div>
+                            </div>
+                        </div>
+                        <div class="workspace-label">PHONEBOOTH</div>
+                    </div>
+
+                    <!-- HUDDLE ROOM -->
+                    <div id="huddle-room" class="workspace">
+                        <div class="workspace-slots">
+                            <div class="work-slot" data-type="green" data-slot="huddle">
+                                <div class="card-timer hidden"></div>
+                            </div>
+                        </div>
+                        <div class="workspace-label">HUDDLE ROOM</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay de Mensagem -->
+    <div id="message-overlay" class="hidden">
+        <div id="message-box">
+            <div id="message-icon"></div>
+            <h2 id="message-title"></h2>
+            <p id="message-text"></p>
+            <div id="message-stats"></div>
+            <div class="message-buttons">
+                <button id="restart-btn-overlay" class="game-btn">Recomeçar</button>
+                <button id="return-panel-btn" class="game-btn btn-return-panel hidden"
+                    onclick="localStorage.setItem('escaperoom_progress', '3'); window.location.href='/principal/';">Voltar
+                    ao Painel de Controlo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de Feedback -->
+    <div id="toast"></div>
+
+    <!-- Tooltip de Erro -->
+    <div id="error-tooltip" class="hidden">
+        <span class="error-icon">❌</span>
+        <span class="error-text">Local Inadequado!</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/global-session-timer.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/employee.js"></script>
+    <script src="js/dragdrop.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>

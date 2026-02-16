@@ -1,0 +1,973 @@
+:root {
+    --color-bg: #1a1a2e;
+    --color-surface: #262b45;
+    --color-text: #e2e8f0;
+    --color-text-light: #94a3b8;
+    --color-accent: #81C784;
+    --color-accent-hover: #66BB6A;
+    --color-secondary: #64B5F6;
+    --color-error: #EF5350;
+    --font-main: 'Nunito', 'Segoe UI', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+    --container-width: 1200px;
+    --container-height: 675px;
+}
+
+/* ==================== RESET & BASE ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background: #0f172a;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text);
+    overflow: hidden;
+}
+
+/* ==================== CONTAINER ==================== */
+#game-container {
+    width: var(--container-width);
+    height: var(--container-height);
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    background-color: var(--color-bg);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==================== TELA INICIAL ==================== */
+#start-screen {
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/screens/inicio.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+#start-btn {
+    position: absolute;
+    left: 776px;
+    top: 484px;
+    transform: translate(-50%, -50%);
+    background: url('../assets/buttons/botao_iniciar.png') no-repeat center;
+    background-size: contain;
+    color: transparent;
+    border: none;
+    width: 200px;
+    height: 60px;
+    cursor: pointer;
+    font-size: 0;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+#start-btn:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+    filter: brightness(1.2);
+}
+
+/* ==================== TELA DE MISSÃO ==================== */
+#mission-screen {
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/screens/Fundo_missao_novo.png');
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    animation: fadeIn 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.mission-content {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    gap: 0.8rem;
+    font-family: var(--font-main);
+    margin-left: 0;
+}
+
+.mission-title {
+    font-size: 3rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+    text-shadow: none;
+}
+
+.mission-description {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    max-width: 850px;
+    color: #e2e8f0;
+    text-shadow: none;
+}
+
+.mission-subtitle {
+    font-size: 1.4rem;
+    margin-top: 0.5rem;
+    font-weight: normal;
+}
+
+.mission-cards {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+    margin: 0.5rem 0;
+}
+
+.mission-card {
+    background: rgba(30, 41, 59, 0.7);
+    border: 2px solid #ef4444;
+    border-radius: 12px;
+    padding: 1rem;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+}
+
+/* Card color themes */
+.card-blue,
+.card-red,
+.card-green {
+    background: rgba(30, 41, 59, 0.7);
+    border-color: #ef4444;
+}
+
+.mission-card h3 {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.mission-card .location-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.mission-access-code {
+    margin-top: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffffff;
+    background: rgba(30, 41, 59, 0.8);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    border: 1px solid #ef4444;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#continue-btn {
+    /* Reset absolute positioning */
+    position: static;
+    transform: none;
+
+    /* Keep button style */
+    background: url('../assets/buttons/botao_continuar.png') no-repeat center;
+    background-size: contain;
+    color: transparent;
+    border: none;
+    width: 250px;
+    height: 80px;
+    cursor: pointer;
+    font-size: 0;
+    transition: all 0.3s ease;
+}
+
+.game-btn {
+    background: #4a5568;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.game-btn:hover {
+    background: #2d3748;
+}
+
+#continue-btn:hover {
+    transform: scale(1.05);
+}
+
+/* ==================== ÁREA DO JOGO ==================== */
+#game-area {
+    width: 100%;
+    height: 100%;
+    background: #2d3748;
+    position: relative;
+}
+
+/* ==================== HEADER DO JOGO ==================== */
+#header {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 0;
+    background: transparent;
+    z-index: 50;
+    height: auto;
+}
+
+#timer-container {
+    display: none !important;
+}
+
+.timer-icon {
+    font-size: 1.3rem;
+}
+
+#timer {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #48bb78;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 10px rgba(72, 187, 120, 0.5);
+}
+
+#timer.warning {
+    color: #ed8936;
+    text-shadow: 0 0 10px rgba(237, 137, 54, 0.5);
+}
+
+#timer.danger {
+    color: #f56565;
+    text-shadow: 0 0 10px rgba(245, 101, 101, 0.5);
+    animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+#phase-indicator {
+    background: rgba(0, 0, 0, 0.72);
+    padding: 6px 15px;
+    border-radius: 15px;
+    border: 1px solid #ff6b35;
+    flex-shrink: 0;
+}
+
+#phase-text {
+    color: #ff6b35;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+#progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+    background: rgba(0, 0, 0, 0.72);
+    border: 1px solid rgba(160, 174, 192, 0.45);
+    border-radius: 10px;
+    padding: 8px 10px;
+    margin-left: auto;
+    margin-top: -5px;
+}
+
+#progress-text {
+    font-size: 0.8rem;
+    color: #a0aec0;
+    text-align: right;
+}
+
+#progress-text span {
+    color: #ffd93d;
+    font-weight: bold;
+}
+
+#progress-bar {
+    width: 120px;
+    height: 6px;
+    background: #4a5568;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+#progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #48bb78, #68d391);
+    transition: width 0.3s ease;
+    border-radius: 3px;
+}
+
+/* ==================== ÁREA DO ESCRITÓRIO ==================== */
+#office {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* ==================== ÁREAS COMUNS ==================== */
+.area {
+    position: absolute;
+}
+
+.area-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 5px 15px;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #e2e8f0;
+    z-index: 5;
+}
+
+/* ==================== RECEÇÃO ==================== */
+#reception {
+    width: 1180px;
+    height: 189px;
+    left: 10px;
+    top: 55px;
+    background: url('../assets/backgrounds/recepcao.png') no-repeat;
+    background-size: 1180px 189px;
+}
+
+#reception .slots-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Slots tracejados na receção */
+#reception .slot-placeholder {
+    position: absolute;
+    width: 90px;
+    height: 110px;
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    top: 47px;
+}
+
+#reception .slot-placeholder:nth-child(1) {
+    left: 70px;
+}
+
+#reception .slot-placeholder:nth-child(2) {
+    left: 195px;
+}
+
+#reception .slot-placeholder:nth-child(3) {
+    left: 320px;
+}
+
+#reception .slot-placeholder:nth-child(4) {
+    left: 445px;
+}
+
+/* Posições dos cards na receção (90x110) */
+#reception .employee {
+    position: absolute;
+    top: 47px;
+}
+
+#reception .employee:nth-of-type(1) {
+    left: 70px;
+}
+
+#reception .employee:nth-of-type(2) {
+    left: 195px;
+}
+
+#reception .employee:nth-of-type(3) {
+    left: 320px;
+}
+
+#reception .employee:nth-of-type(4) {
+    left: 445px;
+}
+
+/* ==================== SALA DE ESPERA ==================== */
+#waiting-room {
+    width: 1180px;
+    height: 189px;
+    left: 10px;
+    top: 250px;
+    background: url('../assets/backgrounds/sala_espera.png') no-repeat;
+    background-size: 1180px 189px;
+}
+
+#waiting-room .slots-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#waiting-room .slots-container.highlight {
+    background: rgba(72, 187, 120, 0.2);
+}
+
+/* Slots tracejados na sala de espera */
+#waiting-room .slot-placeholder {
+    position: absolute;
+    width: 90px;
+    height: 110px;
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    top: 40px;
+}
+
+#waiting-room .slot-placeholder:nth-child(1) {
+    left: 615px;
+}
+
+#waiting-room .slot-placeholder:nth-child(2) {
+    left: 774px;
+}
+
+#waiting-room .slot-placeholder:nth-child(3) {
+    left: 889px;
+}
+
+/* Posições dos cards na sala de espera (90x110) */
+#waiting-room .employee {
+    position: absolute;
+    top: 40px;
+}
+
+#waiting-room .employee:nth-of-type(1) {
+    left: 615px;
+}
+
+#waiting-room .employee:nth-of-type(2) {
+    left: 774px;
+}
+
+#waiting-room .employee:nth-of-type(3) {
+    left: 889px;
+}
+
+/* ==================== ESPAÇOS DE TRABALHO ==================== */
+#workspaces {
+    position: absolute;
+    top: 445px;
+    left: 10px;
+    width: 1180px;
+    height: 230px;
+}
+
+.workspace {
+    position: absolute;
+    height: 230px;
+}
+
+.workspace-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #e2e8f0;
+    z-index: 5;
+}
+
+.workspace-slots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 35px);
+}
+
+/* ==================== OPEN SPACE: 435x230 em x=0 (relativo ao workspaces) ==================== */
+#open-space {
+    width: 435px;
+    left: 0;
+    top: 0;
+    background: url('../assets/backgrounds/open_space.png') no-repeat;
+    background-size: 435px 230px;
+}
+
+/* Posições dos cards no open space */
+#open-space .work-slot[data-slot="open-a"] {
+    position: absolute;
+    left: 82px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#open-space .work-slot[data-slot="open-b"] {
+    position: absolute;
+    left: 282px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ==================== PHONEBOOTH: 290x230 em x=446 (relativo ao workspaces) ==================== */
+#phonebooth {
+    width: 290px;
+    left: 446px;
+    top: 0;
+    background: url('../assets/backgrounds/phonebooth.png') no-repeat;
+    background-size: 290px 230px;
+}
+
+/* Posição do card no phonebooth */
+#phonebooth .work-slot[data-slot="phone"] {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ==================== HUDDLE ROOM: 435x230 em x=745 (relativo ao workspaces) ==================== */
+#huddle-room {
+    width: 435px;
+    left: 745px;
+    top: 0;
+    background: url('../assets/backgrounds/huddle_room.png') no-repeat;
+    background-size: 435px 230px;
+}
+
+/* Posição do card no huddle room */
+#huddle-room .work-slot[data-slot="huddle"] {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ==================== SLOTS DE TRABALHO ==================== */
+.work-slot {
+    width: 90px;
+    height: 110px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Timer abaixo do card */
+.work-slot .card-timer {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffd93d;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.work-slot.highlight {
+    background: rgba(72, 187, 120, 0.3);
+    border-color: #48bb78;
+    border-style: solid;
+    box-shadow: 0 0 20px rgba(72, 187, 120, 0.5);
+    transform: scale(1.05);
+}
+
+.work-slot.invalid {
+    background: rgba(255, 0, 0, 0.3);
+    border-color: #f56565;
+    border-style: solid;
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.work-slot.occupied {
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* ==================== FUNCIONÁRIOS / CARDS ==================== */
+.employee {
+    width: 90px;
+    height: 110px;
+    border-radius: 8px;
+    cursor: grab;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    user-select: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    overflow: visible;
+    background: transparent;
+    border: none;
+}
+
+.employee-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.employee:hover {
+    transform: scale(1.05);
+}
+
+.employee.dragging {
+    cursor: grabbing;
+    transform: scale(1.15);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0.95;
+}
+
+.employee.wrong-drop {
+    animation: wrong-drop-shake 0.45s ease;
+}
+
+@keyframes wrong-drop-shake {
+    0% {
+        transform: translateX(0) rotate(0deg) scale(1.05);
+    }
+
+    20% {
+        transform: translateX(-10px) rotate(-6deg) scale(1.05);
+    }
+
+    40% {
+        transform: translateX(10px) rotate(6deg) scale(1.05);
+    }
+
+    60% {
+        transform: translateX(-8px) rotate(-5deg) scale(1.05);
+    }
+
+    80% {
+        transform: translateX(8px) rotate(5deg) scale(1.05);
+    }
+
+    100% {
+        transform: translateX(0) rotate(0deg) scale(1.05);
+    }
+}
+
+.employee.working {
+    cursor: default;
+    animation: working-pulse 2s ease-in-out infinite;
+}
+
+@keyframes working-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 4px 25px rgba(255, 217, 61, 0.4);
+    }
+}
+
+/* Remover estilos de cores antigas - usando imagens agora */
+.employee.blue,
+.employee.red,
+.employee.green {
+    background: transparent;
+    border: none;
+}
+
+/* ==================== BARRA DE PACIÊNCIA ==================== */
+.patience-container {
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 10;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.patience-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #f56565 0%, #48bb78 100%);
+    transition: width 0.1s linear;
+    border-radius: 3px;
+}
+
+.patience-bar.low {
+    background: linear-gradient(90deg, #f56565 0%, #ed8936 100%);
+    animation: blink 0.5s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Esconder barra de paciência quando trabalhando */
+.employee.working .patience-container {
+    display: none;
+}
+
+/* ==================== OVERLAY DE MENSAGEM ==================== */
+#message-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+#message-box {
+    background: #2d3748;
+    padding: 40px 50px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    max-width: 450px;
+    width: 90%;
+}
+
+#message-icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+#message-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+#message-box.victory h2 {
+    color: #48bb78;
+}
+
+#message-box.defeat h2 {
+    color: #f56565;
+}
+
+#message-box p {
+    color: #a0aec0;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+#message-stats {
+    background: #1a202c;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+#message-access-code {
+    margin: 15px 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ffd700;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #ffd700;
+}
+
+#message-access-code.hidden {
+    display: none;
+}
+
+#message-stats p {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+#message-stats p:last-child {
+    margin-bottom: 0;
+}
+
+#restart-btn {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+#restart-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+}
+
+/* ==================== TOAST ==================== */
+#toast {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: #e53e3e;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    z-index: 3000;
+    transition: transform 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    font-size: 0.85rem;
+}
+
+#toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+#toast.success {
+    background: #48bb78;
+}
+
+#toast.warning {
+    background: #ed8936;
+}
+
+/* ==================== TOOLTIP DE ERRO ==================== */
+#error-tooltip {
+    position: fixed;
+    background: #e53e3e;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    z-index: 2500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+/* Responsividade desativada — resolução fixa 1200x675 */
+
+/* Botão de Retorno ao Painel de Controlo */
+.btn-return-panel {
+    background: transparent;
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+    box-shadow: 0 0 15px rgba(129, 199, 132, 0.3);
+    letter-spacing: 2px;
+    border-radius: 8px;
+}
+
+.btn-return-panel:hover {
+    background: var(--color-accent);
+    color: #000;
+    box-shadow: 0 0 30px rgba(129, 199, 132, 0.6);
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convivência - Escape Room</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="game-container">
+        <div id="intro-screen" class="screen active">
+            <div class="intro-content">
+                <h1 class="intro-title">Convivência</h1>
+                <p class="intro-description">
+                    Open space requer autorregulação e consciência de que não estamos sozinhos no espaço.
+                    Identifique os 3 atritos nesta cena.
+                </p>
+                <button id="start-btn" class="image-btn" aria-label="Iniciar jogo">
+                    <img src="assets/botao_iniciar.png" alt="Iniciar">
+                </button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen hidden">
+            <div id="scene-area" aria-label="Cena interativa de convivência"></div>
+            <div id="message-layer" aria-hidden="true"></div>
+            <div id="status-pill">Atritos identificados: <span id="found-count">0</span>/3</div>
+        </div>
+
+        <div id="victory-screen" class="screen hidden">
+            <div class="victory-content">
+                <h2>Atritos Identificados. Módulo de Convivência Instalado.</h2>
+                <button id="return-panel-btn" class="btn-return-panel">Voltar ao Painel de Controlo</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../shared/global-session-timer.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>

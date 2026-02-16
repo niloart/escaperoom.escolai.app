@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuito Neural - Escape Room</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Ecrã de Introdução -->
+    <div id="intro-screen" class="screen">
+        <div class="screen-content">
+            <h1 class="screen-title">CIRCUITO NEURAL</h1>
+            <p class="screen-subtitle">O 'Circuito Neural' da mudança foi interrompido pela resistência. A energia não
+                está a fluir. A sua missão é criar um caminho contínuo que conecte a 'Entrada de Energia' até à 'Saída',
+                passando pelos 3R na ordem correta</p>
+            <img src="assets/buttons/botao_comecar.png" alt="Começar" class="btn-image" id="startGameBtn">
+        </div>
+    </div>
+
+    <!-- Wrapper com imagem de fundo -->
+    <div id="game-wrapper">
+        <div id="game-container">
+            <canvas id="gameCanvas"></canvas>
+            <div class="circuit-marker circuit-marker-start">SINAL DE<br>MUDANÇA</div>
+            <div class="circuit-marker circuit-marker-end" id="marker-end">ADAPTAÇÃO<br>CONCLUÍDA</div>
+            <div id="overlay">
+                <h1 class="overlay-title">CIRCUITO ESTABILIZADO!</h1>
+                <p class="overlay-text">A corrente flui corretamente: <br> Reconhecimento &gt; Respeito &gt;
+                    Reorientação.<br>
+                    Módulo de Adaptação online</p>
+                <button class="btn btn-return-panel" onclick="localStorage.setItem('escaperoom_progress', '1'); window.location.href='/principal/';">Voltar ao Painel de Controlo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para canos especiais -->
+    <div id="special-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class="modal-icon" id="modal-icon" src="" alt="">
+            </div>
+            <div class="modal-body">
+                <div class="modal-title" id="modal-title"></div>
+                <div class="modal-text" id="modal-text"></div>
+            </div>
+            <div class="modal-footer">
+                <img src="assets/buttons/botao_continuar.png" alt="Percebi" class="btn-image modal-btn"
+                    id="modal-close">
+            </div>
+        </div>
+    </div>
+
+    <script src="../shared/global-session-timer.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/tile.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
