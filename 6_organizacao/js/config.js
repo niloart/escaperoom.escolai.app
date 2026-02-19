@@ -33,17 +33,17 @@ const CONFIG = {
 
     TEXTS: {
         introMessage:
-            "ORGANIZAÇÃO:\nAnalise os objetos destacados e decida o destino imediato: LIXO, CACIFO ou MANTER NA MESA. Depois, deverá ir à zona de Cacifos e guardar os seus pertences",
+            "ORGANIZAÇÃO:\nObserva os objetos e decide o destino imediato de cada um: LIXO, CACIFO ou MANTER NA MESA.<br>Depois, deverás ir à zona dos cacifos e guardar os teus pertences.",
         phase1Header: "FASE 1 - ARRUMAR A MESA",
         phase2Header: "FASE 2 - GUARDAR NO CACIFO",
         phase2Instruction: "Escolha um armário, defina a senha e depois reencontre-o.",
-        allPhase1Done: "Mesa organizada. Agora siga para os cacifos.",
+        allPhase1Done: "Secretária 100% limpa e organizada. Protocolo Clean Desk validado.<br>Vamos até à zona de cacifos para guardar os pertences",
         wrongChoice: "Destino incorreto.",
         localIncorreto: "Local incorreto!",
         rightChoice: "Correto!",
         pinSetPrompt: "CRIE UMA SENHA",
         pinEnterPrompt: "INSIRA A SENHA",
-        phase2FindLockerPrompt: "Agora, encontre ter cacifo e insira a senha para coletar seus pertences",
+        phase2FindLockerPrompt: "Agora, encontre teu cacifo e insira a senha para coletar teus pertences",
         winTitle: "ACESSO PERMITIDO",
         winMsg: "Você concluiu as duas fases da organização.",
         loseTitle: "SISTEMA BLOQUEADO",

@@ -151,10 +151,10 @@ class GameController {
         this.elements.rightPanel.style.opacity = '1';
 
         // Content
-        this.elements.scenarioTitle.textContent = scenario.title;
+        this.elements.scenarioTitle.innerHTML = scenario.title;
         this.elements.instructionText.textContent = "Escolhe a ação corretiva:";
         
-        this.elements.alertTitle.textContent = scenario.alert;
+        this.elements.alertTitle.innerHTML = scenario.alert;
         this.elements.alertVisualDesc.textContent = scenario.visualDesc;
         this.elements.alertBox.style.display = 'flex'; 
 
@@ -163,7 +163,7 @@ class GameController {
         scenario.options.forEach(option => {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
-            btn.textContent = option.text;
+            btn.innerHTML = option.text;
             btn.addEventListener('click', () => this.handleOption(option.id, option.correct));
             this.elements.optionsContainer.appendChild(btn);
         });

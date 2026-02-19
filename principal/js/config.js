@@ -5,7 +5,7 @@ const CONFIG = {
     COLORS: {
         background: "#1a1a2e", 
         screenLocked: "#cf4545",       // Vermelho
-        screenActive: "#e6c200",       // Amarelo (aguardando chave)
+        screenActive: "#e6c200",       // Amarelo (A AGUARDAR CHAVE)
         screenUnlocked: "#45cf78",     // Verde
         screenCompleted: "#2a8a4a",    // Verde escuro (concluído)
         screenNeutral: "#333333",      // Cinza desligado

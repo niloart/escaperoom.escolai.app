@@ -223,7 +223,7 @@ body {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
-/* Estado: Ativo (aguardando chave) */
+/* Estado: Ativo (A AGUARDAR CHAVE) */
 .monitor.active {
     border-color: var(--color-active);
     background-color: rgba(230, 194, 0, 0.1);
@@ -233,7 +233,7 @@ body {
 }
 
 .monitor.active::after {
-    content: "AGUARDANDO CHAVE";
+    content: "A AGUARDAR CHAVE";
     font-size: 1.2rem;
     color: var(--color-active);
     font-weight: bold;

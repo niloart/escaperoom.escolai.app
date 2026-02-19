@@ -125,7 +125,7 @@ class GameController {
 
         const messageEl = document.createElement('div');
         messageEl.className = `scene-message ${type}`;
-        messageEl.textContent = message;
+        messageEl.innerHTML = message;
         this.messageLayer.appendChild(messageEl);
 
         const maxLeft = Math.max(0, CONFIG.GAME_WIDTH - messageEl.offsetWidth - 12);

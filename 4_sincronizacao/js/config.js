@@ -19,20 +19,20 @@ const CONFIG = {
             alert: "Alerta de Áudio: Eco detetado.",
             coords: { x: 170, y: 396 },
             options: [
-                { id: 'A', text: "Baixar volume do portátil do João", correct: false },
+                { id: 'A', text: "Baixar o volume do portátil do João:", correct: false },
                 { id: 'B', text: "Desligar microfone do portátil do João", correct: true }
             ]
         },
         {
             id: 2,
-            title: "INTERAÇÃO 2 — HEADSETS DUPLICADOS",
+            title: "INTERAÇÃO 2 — <i>HEADPHONES</i> DUPLICADOS",
             visualDesc: "Três colegas na mesa usam headsets individuais e olham para os seus próprios ecrãs",
             visualIcon: "🎧",
-            alert: "Colaboradores com headsets no mesmo espaço físico.",
+            alert: "Colaboradores com <i>headphones</i> no mesmo espaço físico.",
             coords: { x: 362, y: 260 },
             options: [
                 { id: 'A', text: "Pedir atenção aos colaboradores.", correct: false },
-                { id: 'B', text: "Pedir para retirarem os headsets e usarem o áudio da sala.", correct: true }
+                { id: 'B', text: "Pedir para retirarem os <i>headphones</i> e usarem o áudio da sala.", correct: true }
             ]
         },
         {
@@ -56,7 +56,7 @@ const CONFIG = {
             coords: { x: 539, y: 401 },
             options: [
                 { id: 'A', text: "Pedir para afastar o microfone do teclado.", correct: true },
-                { id: 'B', text: "Solicitar que colaborador desligue o microfone.", correct: false }
+                { id: 'B', text: "Pedir que colaborador desligue o microfone.", correct: false }
             ]
         },
         {
@@ -68,7 +68,7 @@ const CONFIG = {
             coords: { x: 226, y: 260 },
             options: [
                 { id: 'A', text: "Ignorar, pois não é sobre a reunião.", correct: false },
-                { id: 'B', text: "Pedir para partilhar os comentários com quem está remoto.", correct: true }
+                { id: 'B', text: "Pedir para partilhar os comentários com quem está online.", correct: true }
             ]
         }
     ],
