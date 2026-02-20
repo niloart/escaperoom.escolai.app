@@ -29,76 +29,22 @@ const CONFIG = {
             "Finanças", "Jurídico", "Operações", "Produto", "Dados", "Qualidade"
         ]
     },
-    // Shapes will be populated dynamically below
-    POLYOMINOES: {} 
-};
-
-// --- Shape Generation Logic ---
-(function generateShapes() {
-    function getRotations(matrix) {
-        const rots = [matrix];
-        let curr = matrix;
-        for (let i = 0; i < 3; i++) {
-            const rows = curr.length;
-            const cols = curr[0].length;
-            let next = Array.from({ length: cols }, () => Array(rows).fill(0));
-            for (let r = 0; r < rows; r++) {
-                for (let c = 0; c < cols; c++) {
-                    next[c][rows - 1 - r] = curr[r][c];
-                }
-            }
-            if (!rots.some(r => JSON.stringify(r) === JSON.stringify(next))) {
-                rots.push(next);
-            }
-            curr = next;
-        }
-        return rots;
-    }
-
-    const BASE_SHAPES = {
+    // Fixed Shapes: [Straight, Correct, Distractor]
+    POLYOMINOES: {
         4: [
-            [[1], [1], [1], [1]], // I-Line (Start)
-            [[1, 1], [1, 1]], // Box
-            [[1, 1], [1, 0], [1, 0]], // L
-            [[1, 0], [1, 0], [1, 1]], // L flip
-            [[1, 0], [1, 1], [0, 1]], // S
-            [[0, 1], [1, 1], [1, 0]]  // Z
+            [[1], [1], [1], [1]], // 1. Straight
+            [[1, 1], [1, 1]],     // 2. Square (Correct for Desk 1)
+            [[1, 0], [1, 0], [1, 1]] // 3. L-shape (Distractor)
         ],
         5: [
-            [[1], [1], [1], [1], [1]], // I-Line
-            [[1, 1], [1, 0], [1, 0], [1, 0]], // L
-            [[1, 0], [1, 0], [1, 0], [1, 1]], // J
-            [[1, 1], [1, 0], [1, 1]], // U / C
-            [[1, 1], [1, 1], [1, 0]], // P
-            [[1, 0], [1, 1], [1, 1]]  // d
+            [[1], [1], [1], [1], [1]], // 1. Straight
+            [[1, 1], [1, 1], [1, 0]],  // 2. P-shape (Correct for Desk 2)
+            [[1, 1], [1, 0], [1, 1]]   // 3. U-shape (Distractor)
         ],
         6: [
-            [[1], [1], [1], [1], [1], [1]], // I-Line
-            [[1, 1], [1, 1], [1, 1]], // Rect 
-            [[1, 1], [1, 0], [1, 0], [1, 1]], // C-long
-            [[1, 0], [1, 0], [1, 1], [1, 1]], // L-thick
-            [[1, 1], [1, 0], [1, 1], [1, 0]], // F / E
-            [[1, 1], [0, 1], [1, 1], [0, 1]] // E inverted
+            [[1], [1], [1], [1], [1], [1]], // 1. Straight
+            [[1, 1], [1, 0], [1, 0], [1, 1]], // 2. C-shape (Correct for Desk 3)
+            [[1, 1], [1, 1], [1, 1]]        // 3. Rect 3x2 (Distractor)
         ]
-    };
-
-    Object.keys(BASE_SHAPES).forEach(size => {
-        CONFIG.POLYOMINOES[size] = [];
-        BASE_SHAPES[size].forEach(base => {
-            const allRotations = getRotations(base);
-            // Filter: Only keep shapes that fit in 2 columns width
-            const valid = allRotations.filter(matrix => matrix[0].length <= 2);
-            CONFIG.POLYOMINOES[size].push(...valid);
-        });
-        
-        // Remove duplicates again after filtering
-        const unique = [];
-        CONFIG.POLYOMINOES[size].forEach(shape => {
-            if (!unique.some(u => JSON.stringify(u) === JSON.stringify(shape))) {
-                unique.push(shape);
-            }
-        });
-        CONFIG.POLYOMINOES[size] = unique;
-    });
-})();
-
+    } 
+};

@@ -186,7 +186,41 @@ body {
 }
 
 .game-header {
-    display: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px 0;
+    position: relative;
+    z-index: 10;
+}
+
+.game-timer {
+    background: rgba(38, 43, 69, 0.9);
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 800;
+    font-family: var(--font-main);
+    padding: 6px 16px;
+    border-radius: 8px;
+    border: 2px solid var(--color-secondary);
+    letter-spacing: 2px;
+    pointer-events: none;
+}
+
+.game-timer.warning {
+    color: #FFA726;
+    border-color: #FFA726;
+}
+
+.game-timer.danger {
+    color: #EF5350;
+    border-color: #EF5350;
+    animation: timerPulse 0.5s ease-in-out infinite;
+}
+
+@keyframes timerPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
 }
 
 .header-left {
@@ -553,6 +587,14 @@ body {
 .victory-content h1 {
     color: var(--color-primary);
     margin-bottom: 1rem;
+}
+
+.victory-content p {
+    font-size: 1rem;
+    color: var(--color-text);
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
 }
 
 /* Keyframes */

@@ -43,6 +43,7 @@
                         Reiniciar
                     </button>
                 </div>
+                <div id="game-timer" class="game-timer">5:00</div>
             </header>
 
             <div id="main-area">
@@ -75,14 +76,15 @@
         <!-- Game Over Screen (Victory) -->
         <div id="victory-screen" class="screen end-screen hidden">
             <h1>Parabéns!</h1>
-            <p>Conseguiste organizar todas as equipas a tempo.</p>
+            <p>Excelente planeamento espacial. No modelo de <em>Free Seating</em>, os lugares não são fixos. A territorialidade gera ineficiência no edifício, sendo essencial que as equipas sejam flexíveis e se adaptem às disposições e espaços livres disponíveis no momento, promovendo a rotação.</p>
             <button class="btn-return-panel" onclick="localStorage.setItem('escaperoom_progress', '5'); window.location.href='/principal/';">Voltar ao Painel de Controlo</button>
         </div>
 
         <!-- Game Over Screen (Defeat) -->
         <div id="defeat-screen" class="screen end-screen hidden">
             <h1>Tempo Esgotado!</h1>
-            <p>Que pena! Tenta organizar as equipas mais rápido.</p>
+            <p>Ocupação do espaço não otimizada. No modelo de <em>Free Seating</em>, os lugares não são fixos. A territorialidade gera ineficiência no edifício, sendo essencial que as equipas sejam flexíveis e se adaptem às disposições e espaços livres disponíveis no momento, promovendo a rotação.</p>
+            <button class="btn-return-panel" onclick="localStorage.setItem('escaperoom_progress', '5'); window.location.href='/principal/';">Voltar ao Painel de Controlo</button>
         </div>
     </div>
 

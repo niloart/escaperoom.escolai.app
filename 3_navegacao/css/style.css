@@ -260,7 +260,13 @@ body {
 }
 
 #timer-container {
-    display: none !important;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#timer-container.hidden {
+    display: none;
 }
 
 .timer-icon {

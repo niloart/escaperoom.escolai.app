@@ -3,8 +3,8 @@
  */
 
 const CONFIG = {
-    // Duração total do jogo em segundos (4 minutos)
-    GAME_DURATION: 240,
+    // Duração total do jogo em segundos (5 minutos)
+    GAME_DURATION: 300,
     
     // Total de colaboradores a serem atendidos
     TOTAL_EMPLOYEES: 9,
@@ -13,16 +13,16 @@ const CONFIG = {
     UPDATE_INTERVAL: 100,
     
     // Paciência máxima
-    PATIENCE_MAX: 100,
+    PATIENCE_MAX: 500,
     
     // Taxa de decaimento da paciência por segundo
     PATIENCE_DECAY: {
-        RECEPTION: 5,      // ~25 segundos para zerar na receção
-        WAITING_ROOM: 1.5  // ~67 segundos para zerar na sala de espera
+        RECEPTION: 2,      // ~25 segundos para zerar na receção
+        WAITING_ROOM: 1  // ~67 segundos para zerar na sala de espera
     },
     
     // Penalidade por colocar em local errado (segundos perdidos no timer)
-    WRONG_PLACE_PENALTY: 10,
+    WRONG_PLACE_PENALTY: 1,
     
     // Tipos de tarefas com suas configurações
     TASK_TYPES: {

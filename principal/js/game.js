@@ -5,8 +5,6 @@ class ScapeRoomGame {
         this.startScreen = document.getElementById('start-screen');
         this.startBtn = document.getElementById('start-btn');
         this.dragHintPopup = document.getElementById('drag-hint-popup');
-        this.timeoutScreen = document.getElementById('timeout-screen');
-        this.timeoutReturnBtn = document.getElementById('timeout-return-btn');
         
         // Modal elements
         this.passwordModal = document.getElementById('password-modal');
@@ -29,11 +27,6 @@ class ScapeRoomGame {
     // --- Inicialização ---
 
     init() {
-        if (this.shouldShowTimeoutScreen()) {
-            this.showTimeoutScreen();
-            return;
-        }
-
         this.loadProgress();
         this.createScreens();
         this.createKeys();
@@ -42,7 +35,7 @@ class ScapeRoomGame {
         this.bindModalEvents();
         this.restoreVisualState();
 
-        const shouldAutoStart = this.currentScreenIndex > 0 || this.hasRunningDeadline();
+        const shouldAutoStart = this.currentScreenIndex > 0;
         if (shouldAutoStart) {
             this.startMission({ startTimerIfNeeded: false });
         }
@@ -188,47 +181,13 @@ class ScapeRoomGame {
         }
     }
 
-    shouldShowTimeoutScreen() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get('timeout') === '1' || localStorage.getItem('escaperoom_timeout_expired') === '1';
-    }
-
-    showTimeoutScreen() {
-        if (this.timeoutScreen) {
-            this.timeoutScreen.classList.remove('hidden');
-        }
-
-        if (this.startScreen) {
-            this.startScreen.classList.add('hidden');
-        }
-
-        if (this.resetProgressBtn) {
-            this.resetProgressBtn.classList.add('hidden');
-        }
-
-        if (this.keysContainer) {
-            this.keysContainer.classList.add('hidden');
-        }
-
-        if (this.timeoutReturnBtn) {
-            this.timeoutReturnBtn.onclick = () => {
-                localStorage.removeItem('escaperoom_timeout_expired');
-                localStorage.removeItem(CONFIG.STORAGE_KEY);
-                localStorage.removeItem('escaperoom_deadline_ts');
-                localStorage.removeItem('escaperoom_final_unlocked');
-                window.location.href = '/principal/';
-            };
-        }
-    }
-
     bindStartEvents() {
         if (!this.startBtn) return;
         this.startBtn.onclick = () => this.startMission({ startTimerIfNeeded: true });
     }
 
     hasRunningDeadline() {
-        const raw = parseInt(localStorage.getItem('escaperoom_deadline_ts') || '0', 10);
-        return Number.isFinite(raw) && raw > Date.now();
+        return false;
     }
 
     startMission({ startTimerIfNeeded }) {
@@ -237,10 +196,6 @@ class ScapeRoomGame {
         }
 
         this.showDragHint();
-
-        if (startTimerIfNeeded && window.EscapeRoomSessionTimer && typeof window.EscapeRoomSessionTimer.startSession === 'function') {
-            window.EscapeRoomSessionTimer.startSession();
-        }
     }
 
     showDragHint() {
@@ -382,7 +337,7 @@ class ScapeRoomGame {
         this.feedbackScreen.classList.remove('hidden');
         this.feedbackScreen.innerHTML = '';
         if (this.resetProgressBtn) {
-            this.resetProgressBtn.innerText = 'Jogar o Escape Room novamente';
+            this.resetProgressBtn.innerText = 'Jogar o desafio final novamente';
             this.resetProgressBtn.classList.add('on-final-screen');
         }
     }

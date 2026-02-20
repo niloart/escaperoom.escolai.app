@@ -37,7 +37,7 @@ const CONFIG = {
         phase1Header: "FASE 1 - ARRUMAR A MESA",
         phase2Header: "FASE 2 - GUARDAR NO CACIFO",
         phase2Instruction: "Escolha um armário, defina a senha e depois reencontre-o.",
-        allPhase1Done: "Secretária 100% limpa e organizada. Protocolo Clean Desk validado.<br>Vamos até à zona de cacifos para guardar os pertences",
+        allPhase1Done: "Secretária 100% limpa e organizada. Protocolo <em>Clean Desk</em> validado.<br>Vamos até à zona de cacifos para guardar os pertences",
         wrongChoice: "Destino incorreto.",
         localIncorreto: "Local incorreto!",
         rightChoice: "Correto!",

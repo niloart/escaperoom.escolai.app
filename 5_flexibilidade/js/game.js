@@ -28,6 +28,9 @@ class GameController {
         this.lastHoveredCoords = null; // Optimization for dragover
         this.suggestedPlacement = null; // Smart snapping storage
 
+        this.gameTimerSeconds = 300;
+        this.timerEl = document.getElementById('game-timer');
+
         this.init();
     }
 
@@ -69,6 +72,37 @@ class GameController {
         if (this.state.timerInterval) {
             clearInterval(this.state.timerInterval);
             this.state.timerInterval = null;
+        }
+
+        this.startGameTimer();
+    }
+
+    startGameTimer() {
+        this.gameTimerSeconds = 300;
+        this.updateTimerDisplay();
+        this.state.timerInterval = setInterval(() => {
+            this.gameTimerSeconds--;
+            this.updateTimerDisplay();
+            if (this.gameTimerSeconds <= 0) {
+                clearInterval(this.state.timerInterval);
+                this.state.timerInterval = null;
+                if (this.state.status === 'PLAYING') {
+                    this.endGame(false);
+                }
+            }
+        }, 1000);
+    }
+
+    updateTimerDisplay() {
+        if (!this.timerEl) return;
+        const m = Math.floor(this.gameTimerSeconds / 60).toString().padStart(2, '0');
+        const s = (this.gameTimerSeconds % 60).toString().padStart(2, '0');
+        this.timerEl.textContent = `${m}:${s}`;
+        this.timerEl.classList.remove('warning', 'danger');
+        if (this.gameTimerSeconds <= 30) {
+            this.timerEl.classList.add('danger');
+        } else if (this.gameTimerSeconds <= 60) {
+            this.timerEl.classList.add('warning');
         }
     }
 

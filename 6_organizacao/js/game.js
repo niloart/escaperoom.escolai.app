@@ -4,6 +4,8 @@ class CofresGame {
         this.state = "INTRO";
         this.timeLeft = CONFIG.PHASE2.INITIAL_TIME;
         this.timerInterval = null;
+        this.gameTimerSeconds = 300;
+        this.gameTimerInterval = null;
         this.selectedLockerId = null;
         this.targetLockerId = null;
         this.targetPin = null;
@@ -200,6 +202,39 @@ class CofresGame {
 
         this.buildPhase1Items();
         this.startPhase1HintTimer();
+        this.startGameTimer();
+    }
+
+    startGameTimer() {
+        if (this.gameTimerInterval) {
+            clearInterval(this.gameTimerInterval);
+        }
+        this.gameTimerSeconds = 300;
+        const timerEl = document.getElementById('game-timer');
+        const updateDisplay = () => {
+            if (!timerEl) return;
+            const m = Math.floor(this.gameTimerSeconds / 60).toString().padStart(2, '0');
+            const s = (this.gameTimerSeconds % 60).toString().padStart(2, '0');
+            timerEl.textContent = `${m}:${s}`;
+            timerEl.classList.remove('warning', 'danger');
+            if (this.gameTimerSeconds <= 30) {
+                timerEl.classList.add('danger');
+            } else if (this.gameTimerSeconds <= 60) {
+                timerEl.classList.add('warning');
+            }
+        };
+        updateDisplay();
+        this.gameTimerInterval = setInterval(() => {
+            this.gameTimerSeconds--;
+            updateDisplay();
+            if (this.gameTimerSeconds <= 0) {
+                clearInterval(this.gameTimerInterval);
+                this.gameTimerInterval = null;
+                if (this.state !== "GAME_OVER") {
+                    this.gameOver(false);
+                }
+            }
+        }, 1000);
     }
 
     buildPhase1Items() {
@@ -584,16 +619,24 @@ class CofresGame {
             clearInterval(this.timerInterval);
             this.timerInterval = null;
         }
+        if (this.gameTimerInterval) {
+            clearInterval(this.gameTimerInterval);
+            this.gameTimerInterval = null;
+        }
 
         this.state = "GAME_OVER";
+
+        const successMsg = 'Protocolos de segurança e organização concluídos com distinção. A política de <em>Clean Desk</em> exige que a secretária fique organizada e apenas com o equipamento padrão para o próximo colega. Deixar itens pessoais, lixo ou documentos no posto compromete a segurança da informação e o bem-estar, devendo os pertences ser guardados no cacifo digital.';
+        const failMsg = 'O protocolo de segurança e a organização falharam. A política de <em>Clean Desk</em> exige que a secretária fique organizada e apenas com o equipamento padrão para o próximo colega. Deixar itens pessoais, lixo ou documentos no posto compromete a segurança da informação e o bem-estar, devendo os pertences ser guardados no cacifo digital.';
+
         this.elements.endContent.innerHTML = `
-            <h1 class="${win ? "text-success" : "text-fail"}">${win ? CONFIG.TEXTS.winTitle : CONFIG.TEXTS.loseTitle}</h1>
-            <p>${win ? CONFIG.TEXTS.winMsg : CONFIG.TEXTS.loseMsg}</p>
+            <h1 class="${win ? "text-success" : "text-fail"}">${win ? 'ORGANIZAÇÃO CONCLUÍDA!' : 'TEMPO ESGOTADO'}</h1>
+            <p>${win ? successMsg : failMsg}</p>
         `;
 
         const returnBtn = document.getElementById("return-panel-btn");
         if (returnBtn) {
-            returnBtn.classList.toggle("hidden", !win);
+            returnBtn.classList.remove("hidden");
         }
 
         this.elements.gameScreen.classList.add("hidden");

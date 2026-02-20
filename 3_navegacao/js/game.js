@@ -29,6 +29,7 @@ class Game {
         this.elements = {
             missionScreen: document.getElementById('mission-screen'),
             gameArea: document.getElementById('game-area'),
+            timerContainer: document.getElementById('timer-container'),
             timer: document.getElementById('timer'),
             phaseText: document.getElementById('phase-text'),
             completed: document.getElementById('completed'),
@@ -90,6 +91,9 @@ class Game {
         // Atualizar UI
         this.elements.gameArea.classList.remove('hidden');
         this.elements.messageOverlay.classList.add('hidden');
+        if (this.elements.timerContainer) {
+            this.elements.timerContainer.classList.remove('hidden');
+        }
         this.updateTimerUI();
         this.updatePhaseUI();
         this.updateProgressUI();
@@ -335,8 +339,8 @@ class Game {
             this.elements.messageBox.className = 'victory';
             this.elements.messageIcon.textContent = '';
             this.elements.messageTitle.textContent = 'FLUXO OTIMIZADO';
-            this.elements.messageText.textContent =
-                'Parabéns! Todos os colaboradores encontraram o seu espaço. Fluxo de navegação definido!';
+            this.elements.messageText.innerHTML =
+                'Gestão perfeita. É crucial adequar o local à tarefa para não comprometer a produtividade e a confidencialidade: as <em>Phonebooths</em> destinam-se a chamadas privadas, as <em>Huddle Rooms</em> a reuniões mais curtas e com poucos participantes, e o <em>Open Space</em> a trabalho focado ou tarefas rápidas.';
 
             // Mostrar botão de retorno ao painel
             if (this.elements.returnPanelBtn) {
@@ -352,16 +356,16 @@ class Game {
             this.elements.messageBox.className = 'defeat';
             this.elements.messageIcon.textContent = '';
 
-            // Esconder botão de retorno na derrota
+            // Mostrar botão de retorno ao painel também na derrota
             if (this.elements.returnPanelBtn) {
-                this.elements.returnPanelBtn.classList.add('hidden');
+                this.elements.returnPanelBtn.classList.remove('hidden');
             }
 
-            // Mostrar botão de recomeçar apenas na derrota
-            this.elements.restartBtnOverlay.classList.remove('hidden');
+            // Esconder botão de recomeçar
+            this.elements.restartBtnOverlay.classList.add('hidden');
 
-            this.elements.messageTitle.textContent = 'GAME OVER';
-            this.elements.messageText.textContent = 'O Colaborador esperou tempo demais';
+            this.elements.messageTitle.textContent = 'TEMPO ESGOTADO';
+            this.elements.messageText.innerHTML = 'Não foi possível atender a todos os colaboradores. É crucial adequar o local à tarefa para não comprometer a produtividade e a confidencialidade: as <em>Phonebooths</em> destinam-se a chamadas privadas, as <em>Huddle Rooms</em> a reuniões mais curtas e com poucos participantes, e o <em>Open Space</em> a trabalho focado ou tarefas rápidas.';
 
             // Ocultar estatísticas na derrota
             this.elements.messageStats.classList.add('hidden');

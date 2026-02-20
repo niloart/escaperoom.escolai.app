@@ -19,14 +19,14 @@ const CONFIG = {
             alert: "Alerta de Áudio: Eco detetado.",
             coords: { x: 170, y: 396 },
             options: [
-                { id: 'A', text: "Baixar o volume do portátil do João:", correct: false },
+                { id: 'A', text: "Baixar o volume do portátil do João", correct: false },
                 { id: 'B', text: "Desligar microfone do portátil do João", correct: true }
             ]
         },
         {
             id: 2,
             title: "INTERAÇÃO 2 — <i>HEADPHONES</i> DUPLICADOS",
-            visualDesc: "Três colegas na mesa usam headsets individuais e olham para os seus próprios ecrãs",
+            visualDesc: "Três colegas na mesa usam <em>headphones</em> individuais e olham para os seus próprios ecrãs",
             visualIcon: "🎧",
             alert: "Colaboradores com <i>headphones</i> no mesmo espaço físico.",
             coords: { x: 362, y: 260 },

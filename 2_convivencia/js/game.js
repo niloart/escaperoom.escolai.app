@@ -11,6 +11,13 @@ class GameController {
         this.messageLayer = document.getElementById('message-layer');
         this.foundCount = document.getElementById('found-count');
         this.returnBtn = document.getElementById('return-panel-btn');
+        this.endTitle = document.getElementById('end-title');
+        this.endMessage = document.getElementById('end-message');
+        this.timerEl = document.getElementById('game-timer');
+
+        this.gameTimerSeconds = 300;
+        this.gameTimerInterval = null;
+        this.gameEnded = false;
 
         this.init();
     }
@@ -37,6 +44,42 @@ class GameController {
 
     startGame() {
         this.showScreen('game');
+        this.startGameTimer();
+    }
+
+    startGameTimer() {
+        this.gameTimerSeconds = 300;
+        this.updateTimerDisplay();
+        this.gameTimerInterval = setInterval(() => {
+            this.gameTimerSeconds--;
+            this.updateTimerDisplay();
+            if (this.gameTimerSeconds <= 0) {
+                clearInterval(this.gameTimerInterval);
+                this.gameTimerInterval = null;
+                this.triggerTimeout();
+            }
+        }, 1000);
+    }
+
+    updateTimerDisplay() {
+        if (!this.timerEl) return;
+        const m = Math.floor(this.gameTimerSeconds / 60).toString().padStart(2, '0');
+        const s = (this.gameTimerSeconds % 60).toString().padStart(2, '0');
+        this.timerEl.textContent = `${m}:${s}`;
+        this.timerEl.classList.remove('warning', 'danger');
+        if (this.gameTimerSeconds <= 30) {
+            this.timerEl.classList.add('danger');
+        } else if (this.gameTimerSeconds <= 60) {
+            this.timerEl.classList.add('warning');
+        }
+    }
+
+    triggerTimeout() {
+        if (this.gameEnded) return;
+        this.gameEnded = true;
+        if (this.endTitle) this.endTitle.textContent = 'Tempo Esgotado';
+        if (this.endMessage) this.endMessage.innerHTML = 'Necessidades de ajuste não encontradas. Em um <em>Open Space</em>, a autorregulação é fundamental. O respeito pelo foco dos colegas exige que se evitem comportamentos disruptivos, como falar alto ao telemóvel ou realizar reuniões de pé no meio das secretárias, garantindo assim um ambiente harmonioso para todos.';
+        this.showScreen('victory');
     }
 
     showScreen(screen) {
@@ -75,6 +118,13 @@ class GameController {
         this.showClickMessage(spot.message, clickX, clickY, 'success', true);
 
         if (this.foundSpots.size === CONFIG.HIDDEN_SPOTS.length) {
+            this.gameEnded = true;
+            if (this.gameTimerInterval) {
+                clearInterval(this.gameTimerInterval);
+                this.gameTimerInterval = null;
+            }
+            if (this.endTitle) this.endTitle.textContent = 'Atritos Identificados. Módulo de Convivência Instalado.';
+            if (this.endMessage) this.endMessage.innerHTML = 'Excelente capacidade de observação; identificou todas as necessidades de ajuste. Em um <em>Open Space</em>, a autorregulação é fundamental. O respeito pelo foco dos colegas exige que se evitem comportamentos disruptivos, como falar alto ao telemóvel ou realizar reuniões de pé no meio das secretárias, garantindo assim um ambiente harmonioso para todos.';
             setTimeout(() => {
                 this.showScreen('victory');
             }, 4500);

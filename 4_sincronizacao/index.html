@@ -46,7 +46,7 @@
             <!-- Header -->
             <div class="game-header">
                 <div class="header-left"></div>
-
+                <div id="game-timer" class="game-timer">5:00</div>
             </div>
 
             <div class="split-layout">
@@ -103,8 +103,8 @@
         <!-- VICTORY SCREEN -->
         <div id="victory-screen" class="screen">
             <div class="victory-content">
-                <h1>Sincronização Completa!</h1>
-                <p>Conseguiste eliminar todas as interferências com sucesso.</p>
+                <h1 id="victory-title">Sincronização Completa!</h1>
+                <p id="victory-message">Conseguiste eliminar todas as interferências com sucesso.</p>
                 <button class="btn-return-panel" onclick="localStorage.setItem('escaperoom_progress', '4'); window.location.href='/principal/';">Voltar ao Painel de Controlo</button>
             </div>
         </div>

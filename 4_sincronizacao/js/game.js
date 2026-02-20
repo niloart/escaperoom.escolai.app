@@ -6,6 +6,8 @@ class GameController {
         this.syncLevel = 0;
         this.lockTimer = 0;
         this.lockInterval = null;
+        this.gameTimerSeconds = 300;
+        this.gameTimerInterval = null;
 
         this.elements = {
             introScreen: document.getElementById('intro-screen'),
@@ -13,6 +15,9 @@ class GameController {
             victoryScreen: document.getElementById('victory-screen'),
             
             startBtn: document.getElementById('start-btn'),
+            timerEl: document.getElementById('game-timer'),
+            victoryTitle: document.getElementById('victory-title'),
+            victoryMessage: document.getElementById('victory-message'),
             
             syncBar: document.getElementById('sync-fill'),
             syncText: document.getElementById('sync-text'),
@@ -53,6 +58,43 @@ class GameController {
         this.renderInteractionButtons();
         this.clearRightPanel();
         this.showScreen('game');
+        this.startGameTimer();
+    }
+
+    startGameTimer() {
+        this.gameTimerSeconds = 300;
+        this.updateTimerDisplay();
+        this.gameTimerInterval = setInterval(() => {
+            this.gameTimerSeconds--;
+            this.updateTimerDisplay();
+            if (this.gameTimerSeconds <= 0) {
+                clearInterval(this.gameTimerInterval);
+                this.gameTimerInterval = null;
+                this.triggerTimeout();
+            }
+        }, 1000);
+    }
+
+    updateTimerDisplay() {
+        const el = this.elements.timerEl;
+        if (!el) return;
+        const m = Math.floor(this.gameTimerSeconds / 60).toString().padStart(2, '0');
+        const s = (this.gameTimerSeconds % 60).toString().padStart(2, '0');
+        el.textContent = `${m}:${s}`;
+        el.classList.remove('warning', 'danger');
+        if (this.gameTimerSeconds <= 30) {
+            el.classList.add('danger');
+        } else if (this.gameTimerSeconds <= 60) {
+            el.classList.add('warning');
+        }
+    }
+
+    triggerTimeout() {
+        if (this.gameState === 'victory') return;
+        this.setGameState('victory');
+        if (this.elements.victoryTitle) this.elements.victoryTitle.textContent = 'Comunicação Interrompida';
+        if (this.elements.victoryMessage) this.elements.victoryMessage.innerHTML = 'A comunicação foi interrompida. Em uma reunião híbrida, a etiqueta técnica é rigorosa para promover a verdadeira inclusão. É necessário evitar o uso isolado de <em>headphones</em> no mesmo espaço físico, eliminar o eco de microfones sobrepostos e garantir que a equipa remota tem um enquadramento visual correto.';
+        this.showScreen('victory');
     }
 
     renderInteractionButtons() {
@@ -155,7 +197,7 @@ class GameController {
         this.elements.instructionText.textContent = "Escolhe a ação corretiva:";
         
         this.elements.alertTitle.innerHTML = scenario.alert;
-        this.elements.alertVisualDesc.textContent = scenario.visualDesc;
+        this.elements.alertVisualDesc.innerHTML = scenario.visualDesc;
         this.elements.alertBox.style.display = 'flex'; 
 
         // Options
@@ -242,8 +284,13 @@ class GameController {
 
     handleVictory() {
         this.setGameState('victory');
+        if (this.gameTimerInterval) {
+            clearInterval(this.gameTimerInterval);
+            this.gameTimerInterval = null;
+        }
+        if (this.elements.victoryTitle) this.elements.victoryTitle.textContent = 'Sincronização Estabilizada!';
+        if (this.elements.victoryMessage) this.elements.victoryMessage.innerHTML = 'Sincronização estabilizada com excelência. Em uma reunião híbrida, a etiqueta técnica é rigorosa para promover a verdadeira inclusão. É necessário evitar o uso isolado de <em>headphones</em> no mesmo espaço físico, eliminar o eco de microfones sobrepostos e garantir que a equipa remota tem um enquadramento visual correto.';
         this.showScreen('victory');
-        // Update victory screen stats if needed
     }
 }
 
