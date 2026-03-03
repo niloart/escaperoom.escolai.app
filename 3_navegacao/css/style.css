@@ -203,7 +203,7 @@ body {
     transform: none;
 
     /* Keep button style */
-    background: url('../assets/buttons/botao_continuar.png') no-repeat center;
+    background: url('../assets/buttons/botao_iniciar.png') no-repeat center;
     background-size: contain;
     color: transparent;
     border: none;
@@ -829,7 +829,7 @@ body {
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    max-width: 450px;
+    max-width: 700px;
     width: 90%;
 }
 

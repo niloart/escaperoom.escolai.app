@@ -254,24 +254,23 @@ class GameController {
         this.setGameState('locked');
 
         const penaltySeconds = CONFIG.GAMEPLAY.wrongAnswerPenaltySeconds || 10;
-        const appliedViaSessionTimer =
-            window.EscapeRoomSessionTimer &&
-            typeof window.EscapeRoomSessionTimer.applyPenaltySeconds === 'function' &&
-            window.EscapeRoomSessionTimer.applyPenaltySeconds(penaltySeconds);
+        this.gameTimerSeconds = Math.max(0, this.gameTimerSeconds - penaltySeconds);
+        this.updateTimerDisplay();
 
-        if (!appliedViaSessionTimer) {
-            const rawDeadline = parseInt(localStorage.getItem('escaperoom_deadline_ts') || '0', 10);
-            if (Number.isFinite(rawDeadline) && rawDeadline > 0) {
-                localStorage.setItem('escaperoom_deadline_ts', String(rawDeadline - (penaltySeconds * 1000)));
+        if (this.gameTimerSeconds <= 0) {
+            if (this.gameTimerInterval) {
+                clearInterval(this.gameTimerInterval);
+                this.gameTimerInterval = null;
             }
+            this.triggerTimeout();
+            return;
         }
-        
-        // Removed wait time, just show feedback briefly
-        this.showFeedback('error', '❌ Solução incorreta!', `- ${penaltySeconds}s no tempo geral. Tente novamente...`);
+
+        this.showFeedback('error', '❌ Solução incorreta!', `- ${penaltySeconds}s no tempo. Tente novamente...`);
         
         setTimeout(() => {
             this.elements.feedbackOverlay.classList.remove('visible');
-            this.setGameState('playing'); // Resume game on same screen
+            this.setGameState('playing');
         }, 1500);
     }
 

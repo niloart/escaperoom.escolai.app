@@ -168,7 +168,7 @@ class GameController {
             },
             {
                 id: 'team-2',
-                name: 'Financeiro',
+                name: 'Sinistros',
                 size: 5,
                 variantIndex: 0, // Starts as Line
                 placement: null,
@@ -178,7 +178,7 @@ class GameController {
             },
             {
                 id: 'team-3',
-                name: 'Vendas',
+                name: 'Marketing',
                 size: 6,
                 variantIndex: 0, // Starts as Line
                 placement: null,

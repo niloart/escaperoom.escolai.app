@@ -11,7 +11,6 @@ const CONFIG = {
             { id: "garrafa", image: "assets/garrafa.png", x: 935, y: 420, destination: "CACIFO" },
             // { id: "canetas", image: "assets/canetas.png", x: 794, y: 440, destination: "CACIFO" },
             { id: "fone", image: "assets/fone.png", x: 338, y: 491, destination: "CACIFO" },
-            { id: "cafe", image: "assets/cafe.png", x: 874, y: 488, destination: "LIXO" },
             { id: "mochila", image: "assets/mochila.png", x: 980, y: 533, destination: "CACIFO" },
             { id: "teclado", image: "assets/teclado.png", x: 465, y: 521, destination: "MESA", keepOnTable: true },
             { id: "mouse", image: "assets/mouse.png", x: 779, y: 535, destination: "MESA", keepOnTable: true }
@@ -33,7 +32,7 @@ const CONFIG = {
 
     TEXTS: {
         introMessage:
-            "ORGANIZAÇÃO:\nObserva os objetos e decide o destino imediato de cada um: LIXO, CACIFO ou MANTER NA MESA.<br>Depois, deverás ir à zona dos cacifos e guardar os teus pertences.",
+            "Observa os objetos e decide o destino imediato de cada um: LIXO, CACIFO ou MANTER NA MESA.<br>Depois, deverás ir à zona dos cacifos e guardar os teus pertences.",
         phase1Header: "FASE 1 - ARRUMAR A MESA",
         phase2Header: "FASE 2 - GUARDAR NO CACIFO",
         phase2Instruction: "Escolha um armário, defina a senha e depois reencontre-o.",

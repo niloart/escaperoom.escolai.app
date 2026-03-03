@@ -22,7 +22,7 @@ const CONFIG = {
     },
     
     // Penalidade por colocar em local errado (segundos perdidos no timer)
-    WRONG_PLACE_PENALTY: 1,
+    WRONG_PLACE_PENALTY: 10,
     
     // Tipos de tarefas com suas configurações
     TASK_TYPES: {
@@ -90,7 +90,7 @@ const CONFIG = {
         { name: 'Rebeca', type: 'red', image: 'assets/cards/rebeca.png' },
         { name: 'Letícia', type: 'green', image: 'assets/cards/leticia.png' },
         { name: 'Danilo', type: 'green', image: 'assets/cards/danilo.png' },
-        { name: 'Vitor', type: 'green', image: 'assets/cards/vitor.png' }
+        { name: 'Vitor', type: 'blue', image: 'assets/cards/vitor.png' }
     ],
     
     // Caminhos das imagens

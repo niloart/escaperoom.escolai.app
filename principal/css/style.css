@@ -261,7 +261,7 @@ body {
 }
 
 .monitor.unlocked::after {
-    content: "LIBERADO";
+    content: "DESBLOQUEADO";
     font-size: 1.2rem;
     color: var(--color-unlocked);
     font-weight: bold;

@@ -26,7 +26,7 @@ const CONFIG = {
         {
             id: 2,
             title: "INTERAÇÃO 2 — <i>HEADPHONES</i> DUPLICADOS",
-            visualDesc: "Três colegas na mesa usam <em>headphones</em> individuais e olham para os seus próprios ecrãs",
+            visualDesc: "Cinco colegas na mesa usam <em>headphones</em> individuais e olham para os seus próprios ecrãs",
             visualIcon: "🎧",
             alert: "Colaboradores com <i>headphones</i> no mesmo espaço físico.",
             coords: { x: 362, y: 260 },
@@ -43,14 +43,14 @@ const CONFIG = {
             alert: "Não sabes quem está a falar.",
             coords: { x: 665, y: 125 },
             options: [
-                { id: 'A', text: "Pedir para ajustar a câmara", correct: true },
+                { id: 'A', text: "Pedir para ajustar a câmara para enquadrar o quadro ou, caso isso não seja possível, solicitar a quem está na sala que descreva em voz alta o que está a ser escrito, garantindo que as pessoas em remoto conseguem acompanhar.", correct: true },
                 { id: 'B', text: "Pedir se identificar e falar mais alto.", correct: false }
             ]
         },
         {
             id: 4,
             title: "INTERAÇÃO 4 — SOM DO TECLADO",
-            visualDesc: "Um colaborador está a digitar freneticamente no teclado do portátil, muito perto do microfone central.",
+            visualDesc: "Um colaborador está a escrever freneticamente no teclado do portátil, muito perto do microfone central.",
             visualIcon: "⌨️",
             alert: "Som do teclado está a abafar as vozes.",
             coords: { x: 539, y: 401 },

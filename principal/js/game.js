@@ -2,8 +2,6 @@ class ScapeRoomGame {
     constructor() {
         this.container = document.getElementById('game-container');
         this.keysContainer = document.getElementById('keys-container');
-        this.startScreen = document.getElementById('start-screen');
-        this.startBtn = document.getElementById('start-btn');
         this.dragHintPopup = document.getElementById('drag-hint-popup');
         
         // Modal elements
@@ -31,14 +29,9 @@ class ScapeRoomGame {
         this.createScreens();
         this.createKeys();
         this.createFinalPanel();
-        this.bindStartEvents();
         this.bindModalEvents();
         this.restoreVisualState();
-
-        const shouldAutoStart = this.currentScreenIndex > 0;
-        if (shouldAutoStart) {
-            this.startMission({ startTimerIfNeeded: false });
-        }
+        this.showDragHint();
     }
 
     /** Lê o progresso do localStorage */
@@ -181,23 +174,6 @@ class ScapeRoomGame {
         }
     }
 
-    bindStartEvents() {
-        if (!this.startBtn) return;
-        this.startBtn.onclick = () => this.startMission({ startTimerIfNeeded: true });
-    }
-
-    hasRunningDeadline() {
-        return false;
-    }
-
-    startMission({ startTimerIfNeeded }) {
-        if (this.startScreen) {
-            this.startScreen.classList.add('hidden');
-        }
-
-        this.showDragHint();
-    }
-
     showDragHint() {
         if (this.dragHintPopup && this.currentScreenIndex < CONFIG.SCREENS.length) {
             this.dragHintPopup.classList.remove('hidden');
@@ -258,8 +234,8 @@ class ScapeRoomGame {
         screenEl.classList.remove('active');
         screenEl.classList.add('unlocked');
         
-        // 3. Mostra mensagem "LIBERADO"
-        this.showFloatingMessage(screenEl, "LIBERADO");
+        // 3. Mostra mensagem "DESBLOQUEADO"
+        this.showFloatingMessage(screenEl, "DESBLOQUEADO");
 
         // 4. Navega para o jogo após 2 segundos
         setTimeout(() => {

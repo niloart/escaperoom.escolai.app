@@ -305,22 +305,16 @@ class Game {
      * Aplica penalidade por colocar em local errado
      */
     applyPenalty() {
-        const appliedViaSessionTimer =
-            window.EscapeRoomSessionTimer &&
-            typeof window.EscapeRoomSessionTimer.applyPenaltySeconds === 'function' &&
-            window.EscapeRoomSessionTimer.applyPenaltySeconds(CONFIG.WRONG_PLACE_PENALTY);
-
-        if (!appliedViaSessionTimer) {
-            const rawDeadline = parseInt(localStorage.getItem('escaperoom_deadline_ts') || '0', 10);
-            if (Number.isFinite(rawDeadline) && rawDeadline > 0) {
-                localStorage.setItem(
-                    'escaperoom_deadline_ts',
-                    String(rawDeadline - (CONFIG.WRONG_PLACE_PENALTY * 1000))
-                );
-            }
+        this.timeRemaining = Math.max(0, this.timeRemaining - CONFIG.WRONG_PLACE_PENALTY);
+        this.updateTimerUI();
+        if (this.timeRemaining <= 0) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+            this.isRunning = false;
+            this.gameOver(false);
+            return;
         }
-
-        this.showToast(`❌ Local errado! -${CONFIG.WRONG_PLACE_PENALTY}s no tempo geral`, 'error');
+        this.showToast(`❌ Local errado! -${CONFIG.WRONG_PLACE_PENALTY}s no tempo`, 'error');
     }
 
     /**
@@ -340,7 +334,7 @@ class Game {
             this.elements.messageIcon.textContent = '';
             this.elements.messageTitle.textContent = 'FLUXO OTIMIZADO';
             this.elements.messageText.innerHTML =
-                'Gestão perfeita. É crucial adequar o local à tarefa para não comprometer a produtividade e a confidencialidade: as <em>Phonebooths</em> destinam-se a chamadas privadas, as <em>Huddle Rooms</em> a reuniões mais curtas e com poucos participantes, e o <em>Open Space</em> a trabalho focado ou tarefas rápidas.';
+                'Gestão eficaz do espaço. A escolha do local adequado a cada tarefa é essencial<br>para garantir produtividade, foco e confidencialidade.<br>As <em>Phonebooths</em> destinam-se a chamadas ou conversas que exigem privacidade.<br>As <em>Huddle Rooms</em> são ideais para reuniões curtas e com poucos participantes.<br>O <em>Open Space</em> é um espaço de trabalho partilhado, pensado para atividades<br>individuais, colaboração pontual e trocas rápidas, respeitando sempre o foco dos colegas.'
 
             // Mostrar botão de retorno ao painel
             if (this.elements.returnPanelBtn) {

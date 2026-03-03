@@ -109,7 +109,7 @@ class GameController {
         }
 
         if (this.foundSpots.has(spot.id)) {
-            this.showClickMessage('Este atrito já foi identificado.', clickX, clickY, 'info', false);
+            this.showClickMessage('Este desafio já foi identificado.', clickX, clickY, 'info', false);
             return;
         }
 
@@ -123,8 +123,8 @@ class GameController {
                 clearInterval(this.gameTimerInterval);
                 this.gameTimerInterval = null;
             }
-            if (this.endTitle) this.endTitle.textContent = 'Atritos Identificados. Módulo de Convivência Instalado.';
-            if (this.endMessage) this.endMessage.innerHTML = 'Excelente capacidade de observação; identificou todas as necessidades de ajuste. Em um <em>Open Space</em>, a autorregulação é fundamental. O respeito pelo foco dos colegas exige que se evitem comportamentos disruptivos, como falar alto ao telemóvel ou realizar reuniões de pé no meio das secretárias, garantindo assim um ambiente harmonioso para todos.';
+            if (this.endTitle) this.endTitle.textContent = 'Desafios Identificados. Módulo de Convivência Instalado.';
+            if (this.endMessage) this.endMessage.innerHTML = 'Excelente capacidade de observação. Identificaste corretamente todas as situações que requeriam ajuste.<br>Num <em>open space</em>, a autorregulação é essencial. Respeitar o foco dos colegas implica evitar comportamentos disruptivos, como falar alto ao telemóvel ou realizar reuniões informais nas zonas de trabalho.<br>Assim garantimos um ambiente mais equilibrado, produtivo e confortável para todos.';
             setTimeout(() => {
                 this.showScreen('victory');
             }, 4500);
@@ -140,26 +140,16 @@ class GameController {
     }
 
     applyWrongClickPenalty() {
-        if (
-            window.EscapeRoomSessionTimer &&
-            typeof window.EscapeRoomSessionTimer.applyPenaltyMs === 'function' &&
-            window.EscapeRoomSessionTimer.applyPenaltyMs(CONFIG.WRONG_CLICK_PENALTY_MS)
-        ) {
-            return;
+        const penaltySeconds = Math.round(CONFIG.WRONG_CLICK_PENALTY_MS / 1000);
+        this.gameTimerSeconds = Math.max(0, this.gameTimerSeconds - penaltySeconds);
+        this.updateTimerDisplay();
+        if (this.gameTimerSeconds <= 0 && !this.gameEnded) {
+            if (this.gameTimerInterval) {
+                clearInterval(this.gameTimerInterval);
+                this.gameTimerInterval = null;
+            }
+            this.triggerTimeout();
         }
-
-        const rawDeadline = localStorage.getItem(CONFIG.SESSION_DEADLINE_KEY);
-        if (!rawDeadline) {
-            return;
-        }
-
-        const deadline = parseInt(rawDeadline, 10);
-        if (Number.isNaN(deadline)) {
-            return;
-        }
-
-        const updatedDeadline = deadline - CONFIG.WRONG_CLICK_PENALTY_MS;
-        localStorage.setItem(CONFIG.SESSION_DEADLINE_KEY, String(updatedDeadline));
     }
 
     updateFoundCount() {

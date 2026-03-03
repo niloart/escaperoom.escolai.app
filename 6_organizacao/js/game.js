@@ -205,28 +205,29 @@ class CofresGame {
         this.startGameTimer();
     }
 
+    updateGameTimerDisplay() {
+        const timerEl = document.getElementById('game-timer');
+        if (!timerEl) return;
+        const m = Math.floor(this.gameTimerSeconds / 60).toString().padStart(2, '0');
+        const s = (this.gameTimerSeconds % 60).toString().padStart(2, '0');
+        timerEl.textContent = `${m}:${s}`;
+        timerEl.classList.remove('warning', 'danger');
+        if (this.gameTimerSeconds <= 30) {
+            timerEl.classList.add('danger');
+        } else if (this.gameTimerSeconds <= 60) {
+            timerEl.classList.add('warning');
+        }
+    }
+
     startGameTimer() {
         if (this.gameTimerInterval) {
             clearInterval(this.gameTimerInterval);
         }
         this.gameTimerSeconds = 300;
-        const timerEl = document.getElementById('game-timer');
-        const updateDisplay = () => {
-            if (!timerEl) return;
-            const m = Math.floor(this.gameTimerSeconds / 60).toString().padStart(2, '0');
-            const s = (this.gameTimerSeconds % 60).toString().padStart(2, '0');
-            timerEl.textContent = `${m}:${s}`;
-            timerEl.classList.remove('warning', 'danger');
-            if (this.gameTimerSeconds <= 30) {
-                timerEl.classList.add('danger');
-            } else if (this.gameTimerSeconds <= 60) {
-                timerEl.classList.add('warning');
-            }
-        };
-        updateDisplay();
+        this.updateGameTimerDisplay();
         this.gameTimerInterval = setInterval(() => {
             this.gameTimerSeconds--;
-            updateDisplay();
+            this.updateGameTimerDisplay();
             if (this.gameTimerSeconds <= 0) {
                 clearInterval(this.gameTimerInterval);
                 this.gameTimerInterval = null;
@@ -371,16 +372,14 @@ class CofresGame {
 
     applyWrongDestinationPenalty() {
         const penaltySeconds = CONFIG.WRONG_DESTINATION_PENALTY_SECONDS || 10;
-        const appliedViaSessionTimer =
-            window.EscapeRoomSessionTimer &&
-            typeof window.EscapeRoomSessionTimer.applyPenaltySeconds === "function" &&
-            window.EscapeRoomSessionTimer.applyPenaltySeconds(penaltySeconds);
-
-        if (!appliedViaSessionTimer) {
-            const rawDeadline = parseInt(localStorage.getItem("escaperoom_deadline_ts") || "0", 10);
-            if (Number.isFinite(rawDeadline) && rawDeadline > 0) {
-                localStorage.setItem("escaperoom_deadline_ts", String(rawDeadline - (penaltySeconds * 1000)));
+        this.gameTimerSeconds = Math.max(0, this.gameTimerSeconds - penaltySeconds);
+        this.updateGameTimerDisplay();
+        if (this.gameTimerSeconds <= 0 && this.state !== "GAME_OVER") {
+            if (this.gameTimerInterval) {
+                clearInterval(this.gameTimerInterval);
+                this.gameTimerInterval = null;
             }
+            this.gameOver(false);
         }
     }
 
@@ -626,8 +625,8 @@ class CofresGame {
 
         this.state = "GAME_OVER";
 
-        const successMsg = 'Protocolos de segurança e organização concluídos com distinção. A política de <em>Clean Desk</em> exige que a secretária fique organizada e apenas com o equipamento padrão para o próximo colega. Deixar itens pessoais, lixo ou documentos no posto compromete a segurança da informação e o bem-estar, devendo os pertences ser guardados no cacifo digital.';
-        const failMsg = 'O protocolo de segurança e a organização falharam. A política de <em>Clean Desk</em> exige que a secretária fique organizada e apenas com o equipamento padrão para o próximo colega. Deixar itens pessoais, lixo ou documentos no posto compromete a segurança da informação e o bem-estar, devendo os pertences ser guardados no cacifo digital.';
+        const successMsg = 'Cumpriste os protocolos de segurança e organização.<br>A política de <em>Clean Desk</em> implica deixar a secretária livre e apenas com o equipamento padrão para o próximo colega.<br>Itens pessoais, lixo ou documentos não devem ficar no posto de trabalho, para proteger a informação e garantir o bem-estar de todos.<br>Guarda os teus pertences no cacifo.';
+        const failMsg = 'O protocolo de segurança e a organização falharam. A política de <em>Clean Desk</em> exige que a secretária fique organizada e apenas com o equipamento padrão para o próximo colega. Deixar itens pessoais, lixo ou documentos no posto compromete a segurança da informação e o bem-estar, devendo os pertences ser guardados no cacifo.';
 
         this.elements.endContent.innerHTML = `
             <h1 class="${win ? "text-success" : "text-fail"}">${win ? 'ORGANIZAÇÃO CONCLUÍDA!' : 'TEMPO ESGOTADO'}</h1>
