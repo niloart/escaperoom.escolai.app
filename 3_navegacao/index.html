@@ -16,12 +16,12 @@
         <!-- Ecrã de Missão (Overlay sobre o fundo do jogo) -->
         <div id="mission-screen">
             <div class="mission-content">
-                <h1 class="mission-title">A TUA MISSÃO...</h1>
+                <h1 class="mission-title">NAVEGAÇÃO</h1>
                 <p class="mission-description">
                     Assume o papel de facilitador do espaço de trabalho. <br>
                     9 colaboradores precisam de trabalhar, mas os espaços disponíveis são limitados.<br>
                     O teu objetivo é encaminhar cada pessoa para o local mais adequado à sua tarefa.<br>
-                    Atenção: cada atividade ocupa a sala durante algum tempo. 
+                    Atenção: cada atividade ocupa a sala durante algum tempo.
                     Se o espaço ideal estiver ocupado, coloca o colega na sala de espera até ficar disponível.<br>
                     Ninguém pode ficar sem lugar.
                 </p>
@@ -87,7 +87,8 @@
                         <span class="slot-placeholder"></span>
                         <span class="slot-placeholder"></span>
                     </div>
-                    <div class="area-label">Enquanto esperam pelo espaço disponível</div>
+                    <div class="area-label">Arrasta o colaborador para aqui até o espaço adequado ficar disponível.
+                    </div>
                 </div>
 
                 <!-- Espaços de Trabalho - Área inferior -->
@@ -127,20 +128,20 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Overlay de Mensagem -->
-    <div id="message-overlay" class="hidden">
-        <div id="message-box">
-            <div id="message-icon"></div>
-            <h2 id="message-title"></h2>
-            <p id="message-text"></p>
-            <div id="message-stats"></div>
-            <div class="message-buttons">
-                <button id="restart-btn-overlay" class="game-btn">Recomeçar</button>
-                <button id="return-panel-btn" class="game-btn btn-return-panel hidden"
-                    onclick="localStorage.setItem('escaperoom_progress', '3'); window.location.href='/principal/';">Voltar
-                    ao Painel de Controlo</button>
+        <!-- Overlay de Mensagem -->
+        <div id="message-overlay" class="hidden">
+            <div id="message-box">
+                <div id="message-icon"></div>
+                <h2 id="message-title"></h2>
+                <p id="message-text"></p>
+                <div id="message-stats"></div>
+                <div class="message-buttons">
+                    <button id="restart-btn-overlay" class="game-btn">Recomeçar</button>
+                    <button id="return-panel-btn" class="game-btn btn-return-panel hidden"
+                        onclick="localStorage.setItem('escaperoom_progress', '3'); window.location.href='/principal/';">Voltar
+                        ao Painel de Controlo</button>
+                </div>
             </div>
         </div>
     </div>
@@ -152,6 +153,42 @@
     <div id="error-tooltip" class="hidden">
         <span class="error-icon">❌</span>
         <span class="error-text">Local Inadequado!</span>
+    </div>
+
+    <!-- Botão de Ajuda -->
+    <button id="help-btn" class="help-btn" title="Ajuda">?</button>
+
+    <!-- Modal de Ajuda -->
+    <div id="help-modal">
+        <div class="mission-content">
+            <h1 class="mission-title">NAVEGAÇÃO</h1>
+            <p class="mission-description">
+                Assume o papel de facilitador do espaço de trabalho. <br>
+                9 colaboradores precisam de trabalhar, mas os espaços disponíveis são limitados.<br>
+                O teu objetivo é encaminhar cada pessoa para o local mais adequado à sua tarefa.<br>
+                Atenção: cada atividade ocupa a sala durante algum tempo.
+                Se o espaço ideal estiver ocupado, coloca o colega na sala de espera até ficar disponível.<br>
+                Ninguém pode ficar sem lugar.
+            </p>
+            <h2 class="mission-subtitle">Tipos de tarefas</h2>
+            <div class="mission-cards">
+                <div class="mission-card card-blue">
+                    <h3>E-mail / Chat</h3>
+                    <p class="location-text"><i>OPEN SPACE</i></p>
+                </div>
+                <div class="mission-card card-red">
+                    <h3>Confidencial / Feedback</h3>
+                    <p class="location-text"><i>PHONEBOOTH</i></p>
+                </div>
+                <div class="mission-card card-green">
+                    <h3><i>Daily</i> / Alinhamento</h3>
+                    <p class="location-text"><i>HUDDLE ROOM</i></p>
+                </div>
+            </div>
+            <div class="mission-button-container">
+                <img src="../shared/botao_continuar.png" alt="Fechar" class="help-modal-close" id="help-close-btn">
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->

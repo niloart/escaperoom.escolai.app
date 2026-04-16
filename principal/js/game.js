@@ -316,12 +316,29 @@ class ScapeRoomGame {
             this.resetProgressBtn.innerText = 'Jogar o desafio final novamente';
             this.resetProgressBtn.classList.add('on-final-screen');
         }
+        const certBtn = document.getElementById('download-certificate-btn');
+        if (certBtn) {
+            certBtn.classList.remove('hidden');
+            certBtn.classList.add('on-final-screen');
+        }
+
+        const pdfBtn = document.getElementById('download-pdf-btn');
+        if (pdfBtn) {
+            pdfBtn.classList.remove('hidden');
+            pdfBtn.classList.add('on-final-screen');
+        }
+
+        const finalizarBtn = document.getElementById('finalizar-btn');
+        if (finalizarBtn) {
+            finalizarBtn.classList.add('on-final-screen');
+            finalizarBtn.onclick = () => {
+                const overlay = document.getElementById('finalizar-overlay');
+                if (overlay) overlay.classList.add('visible');
+            };
+        }
     }
 
     resetProgress() {
-        const confirmed = window.confirm('Deseja mesmo zerar todo o progresso e começar novamente?');
-        if (!confirmed) return;
-
         if (window.EscapeRoomSessionTimer && typeof window.EscapeRoomSessionTimer.resetAllProgress === 'function') {
             window.EscapeRoomSessionTimer.resetAllProgress();
         } else {

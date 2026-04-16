@@ -18,7 +18,8 @@
         <div class="screen-content">
             <h1 class="screen-title">CIRCUITO DE ADAPTAÇÃO</h1>
             <p class="screen-subtitle"> Este circuito foi interrompido por uma resistência.<br>
-                Liga a ENTRADA (Sinal de Mudança) à SAÍDA (Adaptação Concluída), criando um percurso contínuo pelos 3R na ordem correta: Reconhecer, Respeitar e Orientar.<br> 
+                Liga a ENTRADA (Sinal de Mudança) à SAÍDA (Adaptação Concluída), criando um percurso contínuo pelos 3R
+                na ordem correta: Reconhecer, Respeitar e Orientar.<br>
                 Clica nos segmentos do circuito, curvas ou retas, para construir o caminho. <br>
                 Quando o trajeto ficar iluminado, a energia está a fluir corretamente. </p>
             <img src="assets/buttons/botao_comecar.png" alt="Começar" class="btn-image" id="startGameBtn">
@@ -35,7 +36,9 @@
             <div id="overlay">
                 <h1 class="overlay-title" id="overlay-title">CIRCUITO ESTABILIZADO!</h1>
                 <p class="overlay-text" id="overlay-text"></p>
-                <button class="btn btn-return-panel" onclick="localStorage.setItem('escaperoom_progress', '1'); window.location.href='/principal/';">Voltar ao Painel de Controlo</button>
+                <button class="btn btn-return-panel"
+                    onclick="localStorage.setItem('escaperoom_progress', '1'); window.location.href='/principal/';">Voltar
+                    ao Painel de Controlo</button>
             </div>
         </div>
     </div>
@@ -54,6 +57,23 @@
                 <img src="assets/buttons/botao_continuar.png" alt="Percebi" class="btn-image modal-btn"
                     id="modal-close">
             </div>
+        </div>
+    </div>
+
+    <!-- Botão de Ajuda -->
+    <button id="help-btn" class="help-btn" title="Ajuda">?</button>
+
+    <!-- Modal de Ajuda -->
+    <div id="help-modal">
+        <div class="screen-content">
+            <h1 class="screen-title">CIRCUITO DE ADAPTAÇÃO</h1>
+            <p class="screen-subtitle">Este circuito foi interrompido por uma resistência.<br>
+                Liga a ENTRADA (Sinal de Mudança) à SAÍDA (Adaptação Concluída), criando um percurso contínuo pelos 3R
+                na ordem correta: Reconhecer, Respeitar e Orientar.<br>
+                Clica nos segmentos do circuito, curvas ou retas, para construir o caminho.<br>
+                Quando o trajeto ficar iluminado, a energia está a fluir corretamente.</p>
+            <img src="../shared/botao_continuar.png" alt="Fechar" class="btn-image help-modal-close"
+                id="help-close-btn">
         </div>
     </div>
 

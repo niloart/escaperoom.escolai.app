@@ -86,6 +86,13 @@ class CofresGame {
                 this.hideChoiceMenu();
             }
         });
+
+        // Botão de ajuda
+        const helpBtn = document.getElementById('help-btn');
+        const helpModal = document.getElementById('help-modal');
+        if (helpBtn) helpBtn.addEventListener('click', () => helpModal.classList.add('visible'));
+        const helpCloseBtn = document.getElementById('help-close-btn');
+        if (helpCloseBtn) helpCloseBtn.addEventListener('click', () => helpModal.classList.remove('visible'));
     }
 
     resetPhase1Interaction() {
@@ -189,6 +196,9 @@ class CofresGame {
     start() {
         this.hidePhase2GuideToast();
         this.state = "PHASE1";
+
+        const helpBtn = document.getElementById('help-btn');
+        if (helpBtn) helpBtn.style.display = 'block';
         this.elements.startScreen.classList.add("hidden");
         this.elements.endScreen.classList.add("hidden");
         this.elements.gameScreen.classList.remove("hidden");
@@ -614,6 +624,9 @@ class CofresGame {
     }
 
     gameOver(win) {
+        const helpBtn = document.getElementById('help-btn');
+        if (helpBtn) helpBtn.style.display = 'none';
+
         if (this.timerInterval) {
             clearInterval(this.timerInterval);
             this.timerInterval = null;

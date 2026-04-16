@@ -48,6 +48,12 @@ class NeuralCircuit {
         this.modalClose.addEventListener('click', () => this.closeModal());
         this.startGameBtn.addEventListener('click', () => this.startGame());
 
+        // Botão de ajuda
+        this.helpBtn = document.getElementById('help-btn');
+        this.helpModal = document.getElementById('help-modal');
+        this.helpBtn.addEventListener('click', () => this.showHelp());
+        document.getElementById('help-close-btn').addEventListener('click', () => this.hideHelp());
+
         // Prepara o jogo mas não inicia ainda
         this.initLevel();
         this.loop();
@@ -55,6 +61,7 @@ class NeuralCircuit {
 
     startGame() {
         this.introScreen.classList.add('hidden');
+        this.helpBtn.style.display = 'block';
         this.gameStarted = true;
         this.startHintTimer();
         this.startGameTimer();
@@ -90,6 +97,7 @@ class NeuralCircuit {
     triggerTimeout() {
         if (this.isGameOver) return;
         this.isGameOver = true;
+        if (this.helpBtn) this.helpBtn.style.display = 'none';
         if (this.hintTimeout) clearTimeout(this.hintTimeout);
         if (this.overlayTitle) this.overlayTitle.textContent = 'TEMPO ESGOTADO';
         if (this.overlayText) this.overlayText.innerHTML = 'Não foi possível restabelecer a ligação. A verdadeira mudança exige um processo estruturado: é essencial Reconhecer as emoções, Respeitar o tempo de adaptação e Reorientar as práticas para que o novo <em>mindset</em> flua de forma sustentável e sem interrupções.';
@@ -413,6 +421,7 @@ class NeuralCircuit {
     triggerWin() {
         if (this.isGameOver) return;
         this.isGameOver = true;
+        if (this.helpBtn) this.helpBtn.style.display = 'none';
 
         if (this.hintTimeout) clearTimeout(this.hintTimeout);
         if (this.gameTimerInterval) {
@@ -431,6 +440,14 @@ class NeuralCircuit {
         setTimeout(() => {
             this.overlay.classList.add('visible');
         }, 500);
+    }
+
+    showHelp() {
+        this.helpModal.classList.add('visible');
+    }
+
+    hideHelp() {
+        this.helpModal.classList.remove('visible');
     }
 
     loop() {

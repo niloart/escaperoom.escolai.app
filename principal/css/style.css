@@ -150,13 +150,158 @@ body {
 
 #reset-progress-btn.on-final-screen {
     left: 750px;
-    top: 570px;
+    top: 575px;
     bottom: auto;
     color: #D15B32;
+    white-space: nowrap;
 }
 
 #reset-progress-btn.on-final-screen:hover {
     color: #D15B32;
+}
+
+#download-certificate-btn {
+    position: absolute;
+    z-index: 220;
+    padding: 5px 10px;
+    background: #D15B32;
+    color: #fff;
+    border: 1px solid #cf4545;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+    display: none;
+    left: 750px;
+    top: 467px;
+}
+
+#download-certificate-btn:hover {
+    background: #b84c28;
+    color: #fff;
+}
+
+#download-certificate-btn.on-final-screen {
+    display: inline-block;
+}
+
+#download-pdf-btn {
+    position: absolute;
+    z-index: 220;
+    padding: 5px 10px;
+    background: #D15B32;
+    color: #fff;
+    border: 1px solid #cf4545;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+    display: none;
+    left: 750px;
+    top: 503px;
+}
+
+#download-pdf-btn:hover {
+    background: #b84c28;
+    color: #fff;
+}
+
+#download-pdf-btn.on-final-screen {
+    display: inline-block;
+}
+
+#finalizar-btn {
+    position: absolute;
+    z-index: 220;
+    padding: 5px 5px;
+    background: transparent;
+    color: #D15B32;
+    border: 1px solid #cf4545;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    display: none;
+    left: 750px;
+    top: 539px;
+}
+
+#finalizar-btn:hover {
+    background: rgba(207, 69, 69, 0.16);
+}
+
+#finalizar-btn.on-final-screen {
+    display: inline-block;
+}
+
+#finalizar-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 400;
+    background: transparent;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+#finalizar-overlay.visible {
+    display: flex;
+}
+
+#finalizar-box {
+    position: relative;
+    background: #ffffff;
+    border: 2px solid #D15B32;
+    border-radius: 14px;
+    padding: 24px 48px 28px 48px;
+    text-align: center;
+    color: #1a1a1a;
+    font-family: var(--font-main);
+    font-size: 1.15rem;
+    font-weight: 700;
+    box-shadow: 0 0 26px rgba(209, 91, 50, 0.45);
+    pointer-events: auto;
+    width: 420px;
+    letter-spacing: 0.3px;
+}
+
+#finalizar-box p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+#finalizar-box strong {
+    color: #D15B32;
+    font-weight: 800;
+}
+
+#finalizar-arrow {
+    position: absolute;
+    top: 5px;
+    left: 380px;
+    height: 35px;
+    font-size: 45px;
+    font-weight: 900;
+    color: #D9221C;
+    line-height: 1;
+    display: flex;
+    flex-wrap: wrap;
+    vertical-align: bottom;
+    border-color: transparent;
+    border-image: none;
+    pointer-events: none;
 }
 
 /* ============================
@@ -247,9 +392,17 @@ body {
 }
 
 @keyframes pulse {
-    0%   { box-shadow: 0 0 15px var(--color-active); }
-    50%  { box-shadow: 0 0 25px var(--color-active); }
-    100% { box-shadow: 0 0 15px var(--color-active); }
+    0% {
+        box-shadow: 0 0 15px var(--color-active);
+    }
+
+    50% {
+        box-shadow: 0 0 25px var(--color-active);
+    }
+
+    100% {
+        box-shadow: 0 0 15px var(--color-active);
+    }
 }
 
 /* Estado: Desbloqueado (acabou de usar a chave, antes de navegar) */
@@ -388,9 +541,20 @@ body {
 }
 
 @keyframes floatUp {
-    0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
-    20%  { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
-    100% { opacity: 0; transform: translate(-50%, -150%); }
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -150%);
+    }
 }
 
 /* ============================
@@ -438,8 +602,13 @@ body {
 }
 
 @keyframes blink {
-    from { opacity: 0.5; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0.5;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 /* ============================
@@ -487,9 +656,21 @@ input[type="text"] {
 }
 
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-8px); }
-    40%, 80% { transform: translateX(8px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-8px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(8px);
+    }
 }
 
 input.shake {

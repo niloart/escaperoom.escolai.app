@@ -48,6 +48,13 @@ class GameController {
         if(this.elements.restartGameBtn) {
             this.elements.restartGameBtn.addEventListener('click', () => this.startGame(this.currentLevel));
         }
+
+        // Botão de ajuda
+        const helpBtn = document.getElementById('help-btn');
+        const helpModal = document.getElementById('help-modal');
+        if (helpBtn) helpBtn.addEventListener('click', () => helpModal.classList.add('visible'));
+        const helpCloseBtn = document.getElementById('help-close-btn');
+        if (helpCloseBtn) helpCloseBtn.addEventListener('click', () => helpModal.classList.remove('visible'));
         
 
         // Create Drag Ghost Container
@@ -109,6 +116,9 @@ class GameController {
     showScreen(screenName) {
         Object.values(this.elements.screens).forEach(el => el.classList.add('hidden'));
         this.elements.screens[screenName].classList.remove('hidden');
+
+        const helpBtn = document.getElementById('help-btn');
+        if (helpBtn) helpBtn.style.display = (screenName === 'game') ? 'block' : 'none';
     }
 
     // --- Logic ---

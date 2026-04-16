@@ -44,7 +44,7 @@ const CONFIG = {
             coords: { x: 665, y: 125 },
             options: [
                 { id: 'A', text: "Pedir para ajustar a câmara para enquadrar o quadro ou, caso isso não seja possível, solicitar a quem está na sala que descreva em voz alta o que está a ser escrito, garantindo que as pessoas em remoto conseguem acompanhar.", correct: true },
-                { id: 'B', text: "Pedir se identificar e falar mais alto.", correct: false }
+                { id: 'B', text: "Pedir para se identificar e falar mais alto.", correct: false }
             ]
         },
         {

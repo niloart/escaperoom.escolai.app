@@ -46,6 +46,13 @@ class GameController {
     init() {
         this.elements.startBtn.addEventListener('click', () => this.startGame());
         this.showScreen('intro');
+
+        // Botão de ajuda
+        const helpBtn = document.getElementById('help-btn');
+        const helpModal = document.getElementById('help-modal');
+        if (helpBtn) helpBtn.addEventListener('click', () => helpModal.classList.add('visible'));
+        const helpCloseBtn = document.getElementById('help-close-btn');
+        if (helpCloseBtn) helpCloseBtn.addEventListener('click', () => helpModal.classList.remove('visible'));
     }
 
     startGame() {
@@ -93,7 +100,7 @@ class GameController {
         if (this.gameState === 'victory') return;
         this.setGameState('victory');
         if (this.elements.victoryTitle) this.elements.victoryTitle.textContent = 'Comunicação Interrompida';
-        if (this.elements.victoryMessage) this.elements.victoryMessage.innerHTML = 'A comunicação foi interrompida. Em uma reunião híbrida, a etiqueta técnica é rigorosa para promover a verdadeira inclusão. É necessário evitar o uso isolado de <em>headphones</em> no mesmo espaço físico, eliminar o eco de microfones sobrepostos e garantir que a equipa remota tem um enquadramento visual correto.';
+        if (this.elements.victoryMessage) this.elements.victoryMessage.innerHTML = 'Em uma reunião híbrida, a etiqueta técnica é rigorosa para promover a verdadeira inclusão. É necessário evitar o uso isolado de <em>headphones</em> no mesmo espaço físico, eliminar o eco de microfones sobrepostos e garantir que a equipa remota tem um enquadramento visual correto.';
         this.showScreen('victory');
     }
 
@@ -170,6 +177,9 @@ class GameController {
         if (screenName === 'intro') this.elements.introScreen.classList.add('active');
         if (screenName === 'game') this.elements.gameScreen.classList.add('active');
         if (screenName === 'victory') this.elements.victoryScreen.classList.add('active');
+
+        const helpBtn = document.getElementById('help-btn');
+        if (helpBtn) helpBtn.style.display = (screenName === 'game') ? 'block' : 'none';
     }
 
     updateSyncUI() {

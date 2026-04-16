@@ -68,7 +68,7 @@ body {
 }
 
 .end-screen {
-    background-color: rgba(255, 255, 255, 0.8);
+    background: url('../assets/screens/Fundo_inicio.png') center / cover no-repeat !important;
 }
 
 .end-actions {
@@ -85,17 +85,24 @@ body {
 }
 
 .screen h1 {
-    font-size: 3rem;
-    color: var(--text-color);
-    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
 }
 
 .screen p {
-    font-size: 1.5rem;
-    color: var(--text-color);
-    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    line-height: 1.6;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
     text-align: center;
-    max-width: 800px;
+    max-width: 900px;
+    margin-bottom: 1.5rem;
 }
 
 .btn {
@@ -203,8 +210,15 @@ body {
 }
 
 @keyframes timerPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
 }
 
 #controls {
@@ -567,12 +581,29 @@ body {
 }
 
 @keyframes invalid-shake {
-    0% { transform: translateX(0); }
-    20% { transform: translateX(-6px); }
-    40% { transform: translateX(6px); }
-    60% { transform: translateX(-4px); }
-    80% { transform: translateX(4px); }
-    100% { transform: translateX(0); }
+    0% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-6px);
+    }
+
+    40% {
+        transform: translateX(6px);
+    }
+
+    60% {
+        transform: translateX(-4px);
+    }
+
+    80% {
+        transform: translateX(4px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 }
 
 .team-card.invalid-shake {
@@ -582,6 +613,7 @@ body {
 .cell.invalid-shake {
     animation: invalid-shake 0.45s ease;
 }
+
 /* Start Screen Update */
 #intro-screen {
     background-image: url('../assets/screens/Fundo_inicio.png') !important;
@@ -598,7 +630,8 @@ body {
     cursor: pointer;
     padding: 0;
     transition: transform 0.2s ease;
-    box-shadow: none; /* Remove default btn shadow if present */
+    box-shadow: none;
+    /* Remove default btn shadow if present */
 }
 
 .image-btn:hover {
@@ -611,7 +644,8 @@ body {
 }
 
 .image-btn img {
-    display: block; /* Remove bottom spacing */
+    display: block;
+    width: 250px;
 }
 
 .cell.occupied-fixed {
@@ -646,4 +680,82 @@ body {
     background: var(--color-accent);
     color: #000;
     box-shadow: 0 0 30px rgba(129, 199, 132, 0.6);
+}
+
+/* ==================== HELP BUTTON & MODAL ==================== */
+.help-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #2b6cb0;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    border: 3px solid white;
+    cursor: pointer;
+    z-index: 9999;
+    display: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transition: background 0.2s;
+}
+
+.help-btn:hover {
+    background: #2c5282;
+}
+
+#help-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #0f172a;
+    background-image: url('../assets/screens/Fundo_inicio.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 10000;
+}
+
+#help-modal.visible {
+    display: flex;
+}
+
+#help-modal h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+}
+
+#help-modal p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    line-height: 1.6;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    max-width: 900px;
+    margin-bottom: 1.5rem;
+}
+
+.help-modal-close {
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+}
+
+.help-modal-close:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
 }

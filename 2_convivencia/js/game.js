@@ -40,6 +40,13 @@ class GameController {
         if (this.returnBtn) {
             this.returnBtn.addEventListener('click', () => this.completeAndReturn());
         }
+
+        // Botão de ajuda
+        const helpBtn = document.getElementById('help-btn');
+        const helpModal = document.getElementById('help-modal');
+        if (helpBtn) helpBtn.addEventListener('click', () => helpModal.classList.add('visible'));
+        const helpCloseBtn = document.getElementById('help-close-btn');
+        if (helpCloseBtn) helpCloseBtn.addEventListener('click', () => helpModal.classList.remove('visible'));
     }
 
     startGame() {
@@ -90,6 +97,9 @@ class GameController {
         if (screen === 'intro') this.introScreen.classList.remove('hidden');
         if (screen === 'game') this.gameScreen.classList.remove('hidden');
         if (screen === 'victory') this.victoryScreen.classList.remove('hidden');
+
+        const helpBtn = document.getElementById('help-btn');
+        if (helpBtn) helpBtn.style.display = (screen === 'game') ? 'block' : 'none';
     }
 
     handleSceneClick(event) {
@@ -123,7 +133,7 @@ class GameController {
                 clearInterval(this.gameTimerInterval);
                 this.gameTimerInterval = null;
             }
-            if (this.endTitle) this.endTitle.textContent = 'Desafios Identificados. Módulo de Convivência Instalado.';
+            if (this.endTitle) this.endTitle.textContent = 'Desafios Identificados.';
             if (this.endMessage) this.endMessage.innerHTML = 'Excelente capacidade de observação. Identificaste corretamente todas as situações que requeriam ajuste.<br>Num <em>open space</em>, a autorregulação é essencial. Respeitar o foco dos colegas implica evitar comportamentos disruptivos, como falar alto ao telemóvel ou realizar reuniões informais nas zonas de trabalho.<br>Assim garantimos um ambiente mais equilibrado, produtivo e confortável para todos.';
             setTimeout(() => {
                 this.showScreen('victory');

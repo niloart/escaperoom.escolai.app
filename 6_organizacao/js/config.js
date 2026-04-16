@@ -11,7 +11,7 @@ const CONFIG = {
             { id: "garrafa", image: "assets/garrafa.png", x: 935, y: 420, destination: "CACIFO" },
             // { id: "canetas", image: "assets/canetas.png", x: 794, y: 440, destination: "CACIFO" },
             { id: "fone", image: "assets/fone.png", x: 338, y: 491, destination: "CACIFO" },
-            { id: "mochila", image: "assets/mochila.png", x: 980, y: 533, destination: "CACIFO" },
+            { id: "mochila", image: "assets/mochila.png", x: 860, y: 533, destination: "CACIFO" },
             { id: "teclado", image: "assets/teclado.png", x: 465, y: 521, destination: "MESA", keepOnTable: true },
             { id: "mouse", image: "assets/mouse.png", x: 779, y: 535, destination: "MESA", keepOnTable: true }
         ],

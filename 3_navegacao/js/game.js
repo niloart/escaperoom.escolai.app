@@ -56,6 +56,13 @@ class Game {
     setupEventListeners() {
         this.elements.continueBtn.addEventListener('click', () => this.start());
         this.elements.restartBtnOverlay.addEventListener('click', () => this.restart());
+
+        // Botão de ajuda
+        const helpBtn = document.getElementById('help-btn');
+        const helpModal = document.getElementById('help-modal');
+        if (helpBtn) helpBtn.addEventListener('click', () => helpModal.classList.add('visible'));
+        const helpCloseBtn = document.getElementById('help-close-btn');
+        if (helpCloseBtn) helpCloseBtn.addEventListener('click', () => helpModal.classList.remove('visible'));
     }
 
     /**
@@ -73,6 +80,9 @@ class Game {
     start() {
         // Esconde o ecrã de missão
         this.elements.missionScreen.classList.add('hidden');
+
+        const helpBtn = document.getElementById('help-btn');
+        if (helpBtn) helpBtn.style.display = 'block';
 
         // Reset do estado
         this.isRunning = true;
@@ -322,6 +332,9 @@ class Game {
      */
     gameOver(victory, failedEmployee = null) {
         this.isRunning = false;
+
+        const helpBtn = document.getElementById('help-btn');
+        if (helpBtn) helpBtn.style.display = 'none';
 
         clearInterval(this.gameLoopInterval);
         clearInterval(this.timerInterval);

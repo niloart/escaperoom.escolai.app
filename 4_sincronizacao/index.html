@@ -17,10 +17,12 @@
         <!-- INTRO SCREEN -->
         <div id="intro-screen" class="screen active">
             <div class="intro-content">
-                <h1 class="intro-title">Chave da sincronização</h1>
-                <p class="intro-description">Alerta de conexão. A visão remota está instável e a equipa em casa não consegue
+                <h1 class="intro-title">SINCRONIZAÇÃO</h1>
+                <p class="intro-description">Alerta de conexão. A visão remota está instável e a equipa em casa não
+                    consegue
                     ver nem ouvir com clareza, devido a práticas inadequadas na sala física.<br>
-                    Identifica as fontes de interferência e seleciona rapidamente a ação corretiva antes que a chamada seja interrompida.
+                    Identifica as fontes de interferência e seleciona rapidamente a ação corretiva antes que a chamada
+                    seja interrompida.
                 </p>
                 <div class="intro-cards">
                     <div class="intro-card">
@@ -103,10 +105,38 @@
             <div class="victory-content">
                 <h1 id="victory-title">Sincronização Completa!</h1>
                 <p id="victory-message">Conseguiste eliminar todas as interferências com sucesso.</p>
-                <button class="btn-return-panel" onclick="localStorage.setItem('escaperoom_progress', '4'); window.location.href='/principal/';">Voltar ao Painel de Controlo</button>
+                <button class="btn-return-panel"
+                    onclick="localStorage.setItem('escaperoom_progress', '4'); window.location.href='/principal/';">Voltar
+                    ao Painel de Controlo</button>
             </div>
         </div>
 
+    </div>
+
+    <!-- Botão de Ajuda -->
+    <button id="help-btn" class="help-btn" title="Ajuda">?</button>
+
+    <!-- Modal de Ajuda -->
+    <div id="help-modal">
+        <div class="intro-content">
+            <h1 class="intro-title">SINCRONIZAÇÃO</h1>
+            <p class="intro-description">Alerta de conexão. A visão remota está instável e a equipa em casa não consegue
+                ver nem ouvir com clareza, devido a práticas inadequadas na sala física.<br>
+                Identifica as fontes de interferência e seleciona rapidamente a ação corretiva antes que a chamada seja
+                interrompida.
+            </p>
+            <div class="intro-cards">
+                <div class="intro-card">
+                    <h3>Objetivo:</h3>
+                    <p>Resolver 5 cenários e alcançar 100% de qualidade de sinal.</p>
+                </div>
+                <div class="intro-card">
+                    <h3>Risco:</h3>
+                    <p>As decisões incorretas penalizam o tempo e podem bloquear o sistema.</p>
+                </div>
+            </div>
+            <img src="../shared/botao_continuar.png" alt="Fechar" class="help-modal-close" id="help-close-btn">
+        </div>
     </div>
 
     <script src="../shared/global-session-timer.js"></script>

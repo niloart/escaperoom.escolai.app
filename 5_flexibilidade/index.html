@@ -21,11 +21,13 @@
 
         <!-- Intro Screen -->
         <div id="intro-screen" class="screen">
-            <h1 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Flexibilidade</h1>
-            <p style="color: #fff; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
-            O escritório está quase cheio. Há equipas para alocar, mas os espaços livres têm formatos irregulares.<br>
-            Analisa o espaço disponível e clica em “Ativar Flexibilidade” para adaptares a disposição da tua equipa.<br>
-            Escolhe a melhor configuração e arrasta-a para o espaço livre.
+            <h1>FLEXIBILIDADE</h1>
+            <p>
+                O escritório está quase cheio. Há equipas para alocar, mas os espaços livres têm formatos
+                irregulares.<br>
+                Analisa o espaço disponível e clica em “Ativar Flexibilidade” para adaptares a disposição da tua
+                equipa.<br>
+                Escolhe a melhor configuração e arrasta-a para o espaço livre.
             </p>
             <div id="level-selection" style="display: flex; gap: 20px;">
                 <button class="image-btn level-btn" data-level="1">
@@ -78,18 +80,40 @@
         <div id="victory-screen" class="screen end-screen hidden">
             <h1>Parabéns!</h1>
             <p>Fizeste um excelente planeamento do espaço.<br>
-                 No modelo de <em>Free Seating</em>, os lugares não são fixos. Evitar a territorialidade permite utilizar melhor o escritório.<br>
-                 A flexibilidade das equipas para se adaptarem aos espaços livres promove a rotação, facilita a interação entre pessoas e facilita a colaboração.
-                </p>
-            <button class="btn-return-panel" onclick="localStorage.setItem('escaperoom_progress', '5'); window.location.href='/principal/';">Voltar ao Painel de Controlo</button>
+                No modelo de <em>Free Seating</em>, os lugares não são fixos. Evitar a territorialidade permite utilizar
+                melhor o escritório.<br>
+                A flexibilidade das equipas para se adaptarem aos espaços livres promove a rotação, facilita a interação
+                entre pessoas e facilita a colaboração.
+            </p>
+            <button class="btn-return-panel"
+                onclick="localStorage.setItem('escaperoom_progress', '5'); window.location.href='/principal/';">Voltar
+                ao Painel de Controlo</button>
         </div>
 
         <!-- Game Over Screen (Defeat) -->
         <div id="defeat-screen" class="screen end-screen hidden">
             <h1>Tempo Esgotado!</h1>
-            <p>Ocupação do espaço não otimizada. No modelo de <em>Free Seating</em>, os lugares não são fixos. A territorialidade gera ineficiência no edifício, sendo essencial que as equipas sejam flexíveis e se adaptem às disposições e espaços livres disponíveis no momento, promovendo a rotação.</p>
-            <button class="btn-return-panel" onclick="localStorage.setItem('escaperoom_progress', '5'); window.location.href='/principal/';">Voltar ao Painel de Controlo</button>
+            <p>Ocupação do espaço não otimizada. No modelo de <em>Free Seating</em>, os lugares não são fixos. A
+                territorialidade gera ineficiência no edifício, sendo essencial que as equipas sejam flexíveis e se
+                adaptem às disposições e espaços livres disponíveis no momento, promovendo a rotação.</p>
+            <button class="btn-return-panel"
+                onclick="localStorage.setItem('escaperoom_progress', '5'); window.location.href='/principal/';">Voltar
+                ao Painel de Controlo</button>
         </div>
+    </div>
+
+    <!-- Botão de Ajuda -->
+    <button id="help-btn" class="help-btn" title="Ajuda">?</button>
+
+    <!-- Modal de Ajuda -->
+    <div id="help-modal">
+        <h1>FLEXIBILIDADE</h1>
+        <p>
+            O escritório está quase cheio. Há equipas para alocar, mas os espaços livres têm formatos irregulares.<br>
+            Analisa o espaço disponível e clica em "Ativar Flexibilidade" para adaptares a disposição da tua equipa.<br>
+            Escolhe a melhor configuração e arrasta-a para o espaço livre.
+        </p>
+        <img src="../shared/botao_continuar.png" alt="Fechar" class="help-modal-close" id="help-close-btn">
     </div>
 
     <!-- Scripts -->

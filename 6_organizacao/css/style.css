@@ -74,10 +74,14 @@ body {
 
 /* Typography & General UI */
 h1 {
-    font-size: 3rem;
-    color: var(--color-text);
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     text-align: center;
+    margin-bottom: 1rem;
 }
 
 h2 {
@@ -87,11 +91,13 @@ h2 {
 
 p {
     font-size: 1.2rem;
-    color: #cbd5e1;
-    margin-bottom: 2rem;
-    max-width: 860px;
-    text-align: center;
+    font-weight: 600;
+    color: #e2e8f0;
     line-height: 1.6;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    max-width: 900px;
+    margin-bottom: 1.5rem;
 }
 
 .btn {
@@ -152,8 +158,15 @@ p {
 }
 
 @keyframes timerPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
 }
 
 #phase1-board {
@@ -186,7 +199,6 @@ p {
     align-items: center;
     justify-content: space-between;
     padding: 205px 20px 160px;
-    background: linear-gradient(to bottom, rgba(2, 6, 23, 0.45), rgba(2, 6, 23, 0.6));
 }
 
 #lockers-intro-message {
@@ -615,18 +627,24 @@ p {
 }
 
 .text-success {
-    color: var(--color-accent);
+    color: #ffffff;
 }
 
 .text-fail {
-    color: var(--color-error);
+    color: #ffffff;
+}
+
+#end-screen {
+    background: url('../assets/screens/fundo_incio.png') center / cover no-repeat;
 }
 
 #end-content p {
-    font-size: 1.05rem;
-    color: var(--color-text);
-    line-height: 1.65;
-    max-width: 700px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    line-height: 1.6;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    max-width: 900px;
     margin: 16px auto 24px;
 }
 
@@ -639,10 +657,11 @@ p {
 }
 
 #start-message {
-    font-size: 1.18rem;
-    font-weight: 700;
+    font-size: 1.2rem;
+    font-weight: 600;
     color: #e2e8f0;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    line-height: 1.6;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 .image-btn {
@@ -660,6 +679,11 @@ p {
 
 .image-btn:active {
     transform: scale(0.95);
+}
+
+.image-btn img {
+    display: block;
+    width: 250px;
 }
 
 /* Botão de Retorno ao Painel de Controlo */
@@ -714,4 +738,62 @@ p {
     100% {
         transform: translateX(0);
     }
+}
+
+/* ==================== HELP BUTTON & MODAL ==================== */
+.help-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #2b6cb0;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    border: 3px solid white;
+    cursor: pointer;
+    z-index: 9999;
+    display: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transition: background 0.2s;
+}
+
+.help-btn:hover {
+    background: #2c5282;
+}
+
+#help-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #0f172a;
+    background-image: url('../assets/screens/fundo_incio.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 10000;
+}
+
+#help-modal.visible {
+    display: flex;
+}
+
+.help-modal-close {
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+}
+
+.help-modal-close:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
 }
